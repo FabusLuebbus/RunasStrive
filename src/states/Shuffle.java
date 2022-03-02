@@ -1,14 +1,14 @@
 package states;
 
 import game.Game;
-import gameModelling.Card;
+import gamemodelling.Ability;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-public class Shuffle extends State{
+public class Shuffle extends State {
 
     public Shuffle(Game context) {
         super(context);
@@ -23,7 +23,7 @@ public class Shuffle extends State{
             System.out.println("Enter seeds [1--2147483647] separated by comma:");
             repeat = false;
             String input = scanner.next();
-            if (input.matches("[0-9]*,[0-9]*")){
+            if (input.matches("[0-9]*,[0-9]*")) {
                 int[] inputArray = new int[2];
                 for (int i = 0; i < 2; i++) {
                     String part = input.split(",")[i];
@@ -36,17 +36,16 @@ public class Shuffle extends State{
 
 
                 }
-                Collections.shuffle(game.getAbilityList(), new Random(inputArray[0]));
+                List<Ability> tempAbilityList = game.getAbilityList();
+                Collections.shuffle(tempAbilityList, new Random(inputArray[0]));
+                game.addAbilitiesToQueue(tempAbilityList);
+                Collections.shuffle(game.getMonsterList(), new Random(inputArray[1]));
+                game.addMonstersToQueue(game.getMonsterList());
                 
             } else {
                 repeat = true;
             }
         }
-        
-    }
-
-    @Override
-    public void nextState(State s) {
-
+        nextState(new Stage1(game));
     }
 }

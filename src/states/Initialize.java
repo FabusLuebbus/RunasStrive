@@ -2,25 +2,33 @@ package states;
 
 import game.Game;
 import game.GameUtil;
-import gameModelling.Entity;
-import gameModelling.cards.abilities.runa.Focus;
-import gameModelling.cards.abilities.runa.Fire;
-import gameModelling.cards.abilities.runa.Ice;
-import gameModelling.cards.abilities.runa.Lightning;
-import gameModelling.cards.abilities.runa.Parry;
-import gameModelling.cards.abilities.runa.Pierce;
-import gameModelling.cards.abilities.runa.Reflect;
-import gameModelling.cards.abilities.runa.Slash;
-import gameModelling.cards.abilities.runa.Swing;
-import gameModelling.cards.abilities.runa.Thrust;
-import gameModelling.cards.abilities.runa.Water;
+import gamemodelling.Entity;
+import gamemodelling.abilities.runa.Focus;
+import gamemodelling.abilities.runa.Fire;
+import gamemodelling.abilities.runa.Ice;
+import gamemodelling.abilities.runa.Lightning;
+import gamemodelling.abilities.runa.Parry;
+import gamemodelling.abilities.runa.Pierce;
+import gamemodelling.abilities.runa.Reflect;
+import gamemodelling.abilities.runa.Slash;
+import gamemodelling.abilities.runa.Swing;
+import gamemodelling.abilities.runa.Thrust;
+import gamemodelling.abilities.runa.Water;
+import gamemodelling.monsters.level1.Frog;
+import gamemodelling.monsters.level1.Ghost;
+import gamemodelling.monsters.level1.Goblin;
+import gamemodelling.monsters.level1.Gorgon;
+import gamemodelling.monsters.level1.Mushroomlin;
+import gamemodelling.monsters.level1.Rat;
+import gamemodelling.monsters.level1.Skeleton;
+import gamemodelling.monsters.level1.Spider;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
-public class Initialize extends State{
+public class Initialize extends State {
 
     public Initialize(Game game) {
         super(game);
@@ -31,8 +39,12 @@ public class Initialize extends State{
         boolean repeat = true;
         Scanner scanner = new Scanner(System.in);
 
+        game.setLevel(1);
         game.addAbilities(List.of(new Slash(1), new Swing(1), new Thrust(1), new Pierce(1), new Parry(1),
                 new Focus(1), new Reflect(1), new Water(1), new Ice(1), new Fire(1), new Lightning(1)));
+
+        game.addMonsters(List.of(new Frog(), new Ghost(), new Gorgon(), new Skeleton(), new Spider(), new Goblin(),
+                new Rat(), new Mushroomlin()));
         Entity runa = game.getRuna();
         System.out.println("Welcome to Runa's Strive\nSelect Runa's character class\n1) Warrior\n2) Mage\n3) Paladin");
         while (repeat) {
@@ -41,15 +53,15 @@ public class Initialize extends State{
             System.out.println("Enter number [1--3]:");
             switch (scanner.next()) {
                 case "1":
-                    GameUtil.moveCards(Set.of("Focus", "Water"), game.getAbilities(), runa.getAbilities());
+                    GameUtil.moveCards(Set.of("Focus(1)", "Water(1)"), game.getAbilities(), runa.getAbilities());
                     break;
 
                 case "2":
-                    GameUtil.moveCards(Set.of("Thrust", "Parry"), game.getAbilities(), runa.getAbilities());
+                    GameUtil.moveCards(Set.of("Thrust(1)", "Parry(1)"), game.getAbilities(), runa.getAbilities());
                     break;
 
                 case "3":
-                    GameUtil.moveCards(Set.of("Slash", "Reflect"), game.getAbilities(), runa.getAbilities());
+                    GameUtil.moveCards(Set.of("Slash(1)", "Reflect(1)"), game.getAbilities(), runa.getAbilities());
                     break;
 
                 case "quit":
@@ -60,8 +72,7 @@ public class Initialize extends State{
                     break;
             }
         }
-        game.updateAbilityList(1);
-        Collections.sort(game.getAbilityList());
+
         nextState(new Shuffle(game));
     }
 }
