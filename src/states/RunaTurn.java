@@ -2,6 +2,7 @@ package states;
 
 import game.Game;
 import gamemodelling.Ability;
+import gamemodelling.Runa;
 
 import java.util.List;
 import java.util.Scanner;
@@ -27,7 +28,8 @@ public class RunaTurn extends State {
             if (input > abilities.size() || input < 1) {
                 continue;
             }
-            abilities.get(scanner.nextInt() - 1).play();
+            abilities.get(input - 1).play(stage.fighters.get(0), stage.fighters.get(1));
+            stage.printFighters();
             running = false;
         }
     }

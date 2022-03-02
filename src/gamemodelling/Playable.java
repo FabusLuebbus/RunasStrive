@@ -1,7 +1,7 @@
 package gamemodelling;
 
 public interface Playable {
-    void play();
+    void play(Entity user, Entity target);
 
     boolean checkIfAllowed();
 }

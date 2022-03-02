@@ -8,10 +8,6 @@ import gamemodelling.monsters.Type;
 import java.util.List;
 
 public class Rat extends Monster {
-    protected final Type type = Type.BASIC;
-
-    protected final boolean boss = false;
-
     public Rat() {
         super(14, 7);
         abilityQueue.addAll(List.of(new Block(1), new Claw(1)));

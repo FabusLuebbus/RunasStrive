@@ -1,19 +1,21 @@
 package gamemodelling.abilities.monsters;
 
 import gamemodelling.Ability;
+import gamemodelling.Entity;
+import gamemodelling.monsters.Monster;
 
-public class MonsterLightning extends Ability {
+public class MonsterLightning extends MonsterAbility {
     public MonsterLightning(int initLvl) {
         super(initLvl, 11);
     }
 
     @Override
-    public void play() {
-
+    public String getName() {
+        return "Lightning" + '(' + getLevel() + ')';
     }
 
     @Override
-    public String getName() {
-        return "Lightning" + '(' + getLevel() + ')';
+    public void use(Monster monster, Entity target) {
+
     }
 }

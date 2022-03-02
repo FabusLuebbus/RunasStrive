@@ -11,11 +11,29 @@ import java.util.Queue;
  */
 public abstract class Monster extends Entity implements Comparable<Monster> {
     private int ip;
+    private Type type = Type.BASIC;
+    private boolean boss = false;
     protected Queue<Ability> abilityQueue = new LinkedList<>();
 
     public Monster(int initHP, int number) {
         super(initHP);
         ip = number;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public boolean isBoss() {
+        return boss;
+    }
+
+    public void setBoss(boolean boss) {
+        this.boss = boss;
     }
 
     @Override

@@ -53,11 +53,11 @@ public class Initialize extends State {
             System.out.println("Enter number [1--3]:");
             switch (scanner.next()) {
                 case "1":
-                    GameUtil.moveCards(Set.of("Focus(1)", "Water(1)"), game.getAbilities(), runa.getAbilities());
+                    GameUtil.moveCards(Set.of("Thrust(1)", "Parry(1)"), game.getAbilities(), runa.getAbilities());
                     break;
 
                 case "2":
-                    GameUtil.moveCards(Set.of("Thrust(1)", "Parry(1)"), game.getAbilities(), runa.getAbilities());
+                    GameUtil.moveCards(Set.of("Focus(1)", "Water(1)"), game.getAbilities(), runa.getAbilities());
                     break;
 
                 case "3":
