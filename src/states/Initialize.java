@@ -3,7 +3,7 @@ package states;
 import game.Game;
 import game.GameUtil;
 import gamemodelling.Entity;
-import gamemodelling.abilities.runa.Focus;
+import gamemodelling.abilities.Focus;
 import gamemodelling.abilities.runa.Fire;
 import gamemodelling.abilities.runa.Ice;
 import gamemodelling.abilities.runa.Lightning;
@@ -72,7 +72,7 @@ public class Initialize extends State {
                     break;
             }
         }
-
+        Collections.sort(runa.getAbilities());
         nextState(new Shuffle(game));
     }
 }

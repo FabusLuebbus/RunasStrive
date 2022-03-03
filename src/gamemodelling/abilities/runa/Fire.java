@@ -17,10 +17,10 @@ public class Fire extends OffensiveAbility {
     }
 
     @Override
-    public void use(Entity user, Entity target) {
+    public boolean use(Entity user, Entity target) {
         Monster monster = (Monster) target;
         Runa runa = (Runa) user;
-        setBaseDamage((2 * getLevel() + 5) * runa.getFocusPoints());
-        attackMonster(monster, this);
+        setBaseDamage((2 * getLevel() + 5) * runa.getAvailableFocusPoints());
+        return attackMonster(monster, this);
     }
 }

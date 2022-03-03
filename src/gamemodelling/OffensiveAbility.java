@@ -1,6 +1,7 @@
 package gamemodelling;
 
 import gamemodelling.abilities.DamageType;
+import states.Stage;
 
 public abstract class OffensiveAbility extends Ability {
     private DamageType dmgType;
@@ -31,17 +32,19 @@ public abstract class OffensiveAbility extends Ability {
         return ' ' + dmgType.getBasicType().substring(0, 3) + ". damage";
     }
 
-    public abstract void use(Entity user, Entity target);
+    public abstract boolean use(Entity user, Entity target);
 
-    @Override
-    public void play(Entity user, Entity target) {
+
+    public void play(Entity user, Entity target, Stage stage) {
         /*
         if (!checkIfAllowed()) {
             return;
         }
 
          */
-        System.out.println(user.getClass().getSimpleName() + " uses " + this.getName());
-        this.use(user, target);
+        System.out.println(user.getName() + " uses " + this.getName());
+        if (use(user, target)) {
+            stage.getFighters().remove(target);
+        }
     }
 }

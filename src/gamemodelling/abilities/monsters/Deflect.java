@@ -6,7 +6,7 @@ import gamemodelling.monsters.Monster;
 
 public class Deflect extends MonsterAbility {
     public Deflect(int initLvl) {
-        super(initLvl, 7);
+        super(initLvl, 8);
     }
 
     @Override

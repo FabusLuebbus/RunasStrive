@@ -24,7 +24,8 @@ public class GameUtil {
         }
     }
 
-    public static void attackMonster(Monster monster, OffensiveAbility ability) {
+    public static boolean attackMonster(Monster monster, OffensiveAbility ability) {
+        boolean monsterIsDead = false;
         DamageType type = ability.getDmgType();
         int baseDamage = ability.getBaseDamage();
         int actualDamage = baseDamage;
@@ -37,6 +38,7 @@ public class GameUtil {
                     }
                 }
                 actualDamage -= monster.getBlockAmount();
+                monster.setBlockAmount(0);
                 break;
 
             case "magical":
@@ -45,13 +47,18 @@ public class GameUtil {
                     actualDamage += (2 * ability.getLevel());
                 }
                 actualDamage -= monster.getDeflectAmount();
+                monster.setDeflectAmount(0);
                 break;
         }
-        if (actualDamage < 0) {
-            actualDamage = 0;
+        if (actualDamage > 0) {
+            System.out.println(monster.getName() + " takes " + actualDamage + ability.getShortType());
+
+            if (monster.removeHealth(actualDamage)) {
+                System.out.println(monster.getName() + " dies");
+                monsterIsDead = true;
+            }
         }
-        monster.removeHealth(actualDamage);
-        System.out.println(monster.getClass().getSimpleName() + " takes " + actualDamage + ability.getShortType());
+        return monsterIsDead;
     }
 
     /*public static void attackRuna(Ability ability) {

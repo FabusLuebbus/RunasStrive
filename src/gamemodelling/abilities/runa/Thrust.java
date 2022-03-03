@@ -17,7 +17,7 @@ public class Thrust extends OffensiveAbility {
     }
 
     @Override
-    public void use(Entity user, Entity target) {
+    public boolean use(Entity user, Entity target) {
         Monster monster = (Monster) target;
         Runa runa = (Runa) user;
         Scanner scanner = new Scanner(System.in);
@@ -27,6 +27,6 @@ public class Thrust extends OffensiveAbility {
         if (firstRoll > 5) {
             addBaseDamage(4 * getLevel());
         }
-        attackMonster(monster, this);
+        return attackMonster(monster, this);
     }
 }

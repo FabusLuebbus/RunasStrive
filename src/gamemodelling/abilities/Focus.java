@@ -1,4 +1,4 @@
-package gamemodelling.abilities.runa;
+package gamemodelling.abilities;
 
 import gamemodelling.Ability;
 import gamemodelling.Entity;
@@ -10,9 +10,9 @@ public class Focus extends NonOffensiveAbility {
         super(initLvl, 6);
     }
 
-
     @Override
-    public void use(Runa runa, Entity target) {
-
+    public void use(Entity user) {
+        user.setChanneling(true);
+        user.setPotentialFocusGain(getLevel());
     }
 }

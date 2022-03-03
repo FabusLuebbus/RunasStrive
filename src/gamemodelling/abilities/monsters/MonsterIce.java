@@ -6,7 +6,7 @@ import gamemodelling.monsters.Monster;
 
 public class MonsterIce extends MonsterAbility {
     public MonsterIce(int initLvl) {
-        super(initLvl, 9);
+        super(initLvl, 10);
     }
 
     @Override

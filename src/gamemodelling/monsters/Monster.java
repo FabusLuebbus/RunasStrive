@@ -54,6 +54,11 @@ public abstract class Monster extends Entity implements Comparable<Monster> {
         return deflectAmount;
     }
 
+    public Ability getNextAbility() {
+        abilityQueue.add(abilityQueue.peek());
+        return abilityQueue.poll();
+    }
+
     @Override
     public int compareTo(Monster monster) {
         return Integer.compare(this.ip, monster.ip);

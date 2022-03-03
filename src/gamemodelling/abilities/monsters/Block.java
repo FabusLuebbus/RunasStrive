@@ -6,7 +6,7 @@ import gamemodelling.monsters.Monster;
 
 public class Block extends MonsterAbility {
     public Block(int initLvl) {
-        super(initLvl, 6);
+        super(initLvl, 7);
     }
 
     @Override

@@ -15,10 +15,10 @@ public class Ice extends OffensiveAbility {
     }
 
     @Override
-    public void use(Entity user, Entity target) {
+    public boolean use(Entity user, Entity target) {
         Monster monster = (Monster) target;
         Runa runa = (Runa) user;
-        setBaseDamage((2 * getLevel() + 5) * runa.getFocusPoints() + 2);
-        attackMonster(monster, this);
+        setBaseDamage((2 * getLevel() + 5) * runa.getAvailableFocusPoints() + 2);
+        return attackMonster(monster, this);
     }
 }

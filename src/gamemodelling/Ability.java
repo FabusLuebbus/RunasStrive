@@ -1,6 +1,7 @@
 package gamemodelling;
 
 import gamemodelling.abilities.DamageType;
+import states.Stage;
 
 public abstract class Ability implements Playable, Comparable<Ability> {
     private int level;
@@ -17,7 +18,7 @@ public abstract class Ability implements Playable, Comparable<Ability> {
     }
 
     @Override
-    public abstract void play(Entity user, Entity target);
+    public abstract void play(Entity user, Entity target, Stage stage);
 
     @Override
     public boolean checkIfAllowed() {

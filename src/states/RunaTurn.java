@@ -28,7 +28,7 @@ public class RunaTurn extends State {
             if (input > abilities.size() || input < 1) {
                 continue;
             }
-            abilities.get(input - 1).play(stage.fighters.get(0), stage.fighters.get(1));
+            abilities.get(input - 1).play(stage.fighters.get(0), stage.fighters.get(1), stage);
             running = false;
         }
         nextState(new FocusPointsMonsters(game, stage));

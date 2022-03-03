@@ -11,7 +11,8 @@ public class Parry extends NonOffensiveAbility {
     }
 
     @Override
-    public void use(Runa runa, Entity target) {
-
+    public void use(Entity user) {
+        Runa runa = (Runa) user;
+        runa.setParryAmount(7 * getLevel());
     }
 }

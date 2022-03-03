@@ -32,6 +32,10 @@ public abstract class Stage extends State {
         System.out.println(segmentSeparator);
     }
 
+    public List<Entity> getFighters() {
+        return fighters;
+    }
+
     void printAbilities() {
         for (int i = 1; i <= game.getRuna().getAbilities().size(); i++) {
             Ability ability = game.getRuna().getAbilities().get(i - 1);

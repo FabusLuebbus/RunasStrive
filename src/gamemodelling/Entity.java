@@ -11,13 +11,14 @@ public abstract class Entity implements Living {
     private int maxHealth = 0;
     private int focusPoints = 0;
     private boolean channeling = false;
+    private int potentialFocusGain = 0;
     private List<Ability> abilities = new ArrayList<>();
 
     public Entity(int initHP) {
         healthPoints = initHP;
         maxHealth = initHP;
     }
-    
+
     @Override
     public void addHealth(int amount) {
         healthPoints += amount;
@@ -49,6 +50,18 @@ public abstract class Entity implements Living {
         return channeling;
     }
 
+    public int getPotentialFocusGain() {
+        return potentialFocusGain;
+    }
+
+    public void setPotentialFocusGain(int potentialFocusGain) {
+        this.potentialFocusGain = potentialFocusGain;
+    }
+
+    public String getName() {
+        return getClass().getSimpleName();
+    }
+
     @Override
     public void addFocus(int amount) {
         focusPoints += amount;
@@ -67,7 +80,7 @@ public abstract class Entity implements Living {
     }
 
     public void print() {
-        System.out.println(getClass().getSimpleName() + " (" + getHealthPoints() + '/' + getMaxHealth() + "HP, "
+        System.out.println(getName() + " (" + getHealthPoints() + '/' + getMaxHealth() + "HP, "
                 + getFocusPoints() + "FP)" + printAppendix());
     }
 

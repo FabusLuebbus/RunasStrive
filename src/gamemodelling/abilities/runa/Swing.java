@@ -17,12 +17,12 @@ public class Swing extends OffensiveAbility {
     }
 
     @Override
-    public void use(Entity user, Entity target) {
+    public boolean use(Entity user, Entity target) {
         Monster monster = (Monster) target;
         Runa runa = (Runa) user;
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter dice roll [1--" + runa.getMaxFocusPoints() + "]:");
         setBaseDamage(5 * getLevel() + scanner.nextInt());
-        attackMonster(monster, this);
+        return attackMonster(monster, this);
     }
 }
