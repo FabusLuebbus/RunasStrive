@@ -24,6 +24,12 @@ public class Runa extends Entity {
     }
 
     @Override
+    public int getFocusPoints() {
+        //returns AVAILABLE points
+        return super.getFocusPoints() - 1;
+    }
+
+    @Override
     protected String printAppendix() {
         return "";
     }

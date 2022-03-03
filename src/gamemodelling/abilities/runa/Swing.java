@@ -2,15 +2,27 @@ package gamemodelling.abilities.runa;
 
 import gamemodelling.Ability;
 import gamemodelling.Entity;
+import gamemodelling.OffensiveAbility;
 import gamemodelling.Runa;
+import gamemodelling.abilities.DamageType;
+import gamemodelling.monsters.Monster;
 
-public class Swing extends RunaAbility {
+import java.util.Scanner;
+
+import static game.GameUtil.attackMonster;
+
+public class Swing extends OffensiveAbility {
     public Swing(int initLvl) {
-        super(initLvl, 2);
+        super(initLvl, 2, DamageType.ANTI_FOCUS);
     }
 
     @Override
-    public void use(Runa runa, Entity target) {
-
+    public void use(Entity user, Entity target) {
+        Monster monster = (Monster) target;
+        Runa runa = (Runa) user;
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter dice roll [1--" + runa.getMaxFocusPoints() + "]:");
+        setBaseDamage(5 * getLevel() + scanner.nextInt());
+        attackMonster(monster, this);
     }
 }

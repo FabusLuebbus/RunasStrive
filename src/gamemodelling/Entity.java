@@ -10,6 +10,7 @@ public abstract class Entity implements Living {
     private int healthPoints = 0;
     private int maxHealth = 0;
     private int focusPoints = 0;
+    private boolean channeling = false;
     private List<Ability> abilities = new ArrayList<>();
 
     public Entity(int initHP) {
@@ -38,6 +39,14 @@ public abstract class Entity implements Living {
 
     public int getFocusPoints() {
         return focusPoints;
+    }
+
+    public void setChanneling(boolean channeling) {
+        this.channeling = channeling;
+    }
+
+    public boolean isChanneling() {
+        return channeling;
     }
 
     @Override

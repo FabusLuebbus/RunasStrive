@@ -1,12 +1,15 @@
 package gamemodelling;
 
+import gamemodelling.abilities.DamageType;
+
 public abstract class Ability implements Playable, Comparable<Ability> {
     private int level;
     private int ip;
 
-    public Ability(int initLvl, int orderingNumber) {
+
+    public Ability(int initLvl, int ip) {
         level = initLvl;
-        ip = orderingNumber;
+        this.ip = ip;
     }
 
     public void setLvl(int lvl) {

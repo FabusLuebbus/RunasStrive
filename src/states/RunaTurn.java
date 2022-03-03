@@ -29,8 +29,8 @@ public class RunaTurn extends State {
                 continue;
             }
             abilities.get(input - 1).play(stage.fighters.get(0), stage.fighters.get(1));
-            stage.printFighters();
             running = false;
         }
+        nextState(new FocusPointsMonsters(game, stage));
     }
 }

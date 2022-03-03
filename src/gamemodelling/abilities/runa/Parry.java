@@ -2,9 +2,10 @@ package gamemodelling.abilities.runa;
 
 import gamemodelling.Ability;
 import gamemodelling.Entity;
+import gamemodelling.NonOffensiveAbility;
 import gamemodelling.Runa;
 
-public class Parry extends RunaAbility {
+public class Parry extends NonOffensiveAbility {
     public Parry(int initLvl) {
         super(initLvl, 5);
     }

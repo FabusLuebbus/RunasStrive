@@ -13,6 +13,8 @@ public abstract class Monster extends Entity implements Comparable<Monster> {
     private int ip;
     private Type type = Type.BASIC;
     private boolean boss = false;
+    private int blockAmount = 0;
+    private int deflectAmount = 0;
     protected Queue<Ability> abilityQueue = new LinkedList<>();
 
     public Monster(int initHP, int number) {
@@ -34,6 +36,22 @@ public abstract class Monster extends Entity implements Comparable<Monster> {
 
     public void setBoss(boolean boss) {
         this.boss = boss;
+    }
+
+    public void setBlockAmount(int blockAmount) {
+        this.blockAmount = blockAmount;
+    }
+
+    public int getBlockAmount() {
+        return blockAmount;
+    }
+
+    public void setDeflectAmount(int deflectAmount) {
+        this.deflectAmount = deflectAmount;
+    }
+
+    public int getDeflectAmount() {
+        return deflectAmount;
     }
 
     @Override
