@@ -3,7 +3,6 @@ package states;
 import game.Game;
 
 public abstract class State implements Statelike {
-    boolean running;
     Game game;
 
     public State(Game context) {

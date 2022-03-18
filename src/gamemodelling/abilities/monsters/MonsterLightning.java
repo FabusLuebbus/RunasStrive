@@ -1,12 +1,14 @@
 package gamemodelling.abilities.monsters;
 
-import gamemodelling.Ability;
-import gamemodelling.Entity;
-import gamemodelling.monsters.Monster;
+import gamemodelling.entities.Entity;
+import gamemodelling.abilities.MagicalOffensive;
+import gamemodelling.abilities.DamageType;
 
-public class MonsterLightning extends MonsterAbility {
+
+
+public class MonsterLightning extends MagicalOffensive {
     public MonsterLightning(int initLvl) {
-        super(initLvl, 12);
+        super(initLvl, 12, DamageType.LIGHTNING);
     }
 
     @Override
@@ -15,7 +17,9 @@ public class MonsterLightning extends MonsterAbility {
     }
 
     @Override
-    public void use(Monster monster, Entity target) {
-
+    public void use(Entity user, Entity target) {
+        setBaseDamage(14 * getLevel() + 2);
+        user.removeFocus(getLevel());
+        dealDamage(user, target, this);
     }
 }

@@ -1,8 +1,8 @@
 package gamemodelling.abilities.runa;
 
-import gamemodelling.Entity;
-import gamemodelling.NonOffensiveAbility;
-import gamemodelling.Runa;
+import gamemodelling.entities.Entity;
+import gamemodelling.abilities.NonOffensiveAbility;
+import gamemodelling.entities.runa.Runa;
 
 public class Reflect extends NonOffensiveAbility {
     public Reflect(int initLvl) {
@@ -12,6 +12,6 @@ public class Reflect extends NonOffensiveAbility {
     @Override
     public void use(Entity user) {
         Runa runa = (Runa) user;
-        runa.setReflectAmount(10 * getLevel());
+        runa.setMagicalReflect(10 * getLevel());
     }
 }

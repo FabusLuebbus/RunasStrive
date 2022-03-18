@@ -1,13 +1,10 @@
 package states;
 
 import game.Game;
-import gamemodelling.Ability;
-import gamemodelling.Entity;
-import gamemodelling.NonOffensiveAbility;
-import gamemodelling.Runa;
-import gamemodelling.monsters.Monster;
-
-import java.util.List;
+import gamemodelling.abilities.Ability;
+import gamemodelling.entities.Entity;
+import gamemodelling.abilities.NonOffensiveAbility;
+import gamemodelling.entities.monsters.Monster;
 
 public class MonsterTurn extends State {
     Stage stage;
@@ -19,9 +16,10 @@ public class MonsterTurn extends State {
 
     @Override
     public void start() {
+        Entity runa = stage.fighters.get(0);
         for (int i = 1; i < stage.fighters.size(); i++) {
-            Entity runa = stage.fighters.get(0);
             Monster monster = (Monster) stage.fighters.get(i);
+            monster.resetResistances();
             Ability nextAbility = monster.getNextAbility();
             if (nextAbility instanceof NonOffensiveAbility) {
                 ((NonOffensiveAbility) nextAbility).play(monster);
@@ -29,6 +27,11 @@ public class MonsterTurn extends State {
                 nextAbility.play(monster, runa, stage);
             }
         }
-
+        stage.clearDeadMobs();
+        if (stage.fighters.size() == 1) {
+            nextState(new postFight(game, stage.getNumberOfMonsters()));
+        } else {
+            nextState(new FocusPointsRuna(game, stage));
+        }
     }
 }

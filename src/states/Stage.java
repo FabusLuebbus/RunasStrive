@@ -1,17 +1,18 @@
 package states;
 
 import game.Game;
-import gamemodelling.Ability;
-import gamemodelling.Entity;
+import gamemodelling.entities.Entity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Stage extends State {
     List<Entity> fighters = new ArrayList<>();
+    private int numberOfMonsters;
     static final String segmentSeparator = "----------------------------------------";
-    public Stage(Game context) {
+    public Stage(Game context, int numberOfMonsters) {
         super(context);
+        this.numberOfMonsters = numberOfMonsters;
     }
 
     @Override
@@ -24,6 +25,7 @@ public abstract class Stage extends State {
     }
 
     void printFighters() {
+        System.out.println(segmentSeparator);
         fighters.get(0).print();
         System.out.println("vs.");
         for (int i = 1; i < fighters.size(); i++) {
@@ -36,10 +38,16 @@ public abstract class Stage extends State {
         return fighters;
     }
 
-    void printAbilities() {
-        for (int i = 1; i <= game.getRuna().getAbilities().size(); i++) {
-            Ability ability = game.getRuna().getAbilities().get(i - 1);
-            System.out.println(i + ") " + ability.getName());
+    public void clearDeadMobs() {
+        for (int i = 1; i < fighters.size(); i++) {
+            Entity monster = fighters.get(i);
+            if (monster.getHealthPoints() <= 0) {
+                fighters.remove(monster);
+            }
         }
+    }
+
+    public int getNumberOfMonsters() {
+        return numberOfMonsters;
     }
 }

@@ -1,16 +1,19 @@
 package gamemodelling.abilities.monsters;
 
-import gamemodelling.Ability;
-import gamemodelling.Entity;
-import gamemodelling.monsters.Monster;
+import gamemodelling.entities.Entity;
+import gamemodelling.abilities.PhysicalOffensive;
+import gamemodelling.abilities.DamageType;
 
-public class Smash extends MonsterAbility {
+
+
+public class Smash extends PhysicalOffensive {
     public Smash(int initLvl) {
-        super(initLvl, 3);
+        super(initLvl, 3, DamageType.PHYSICAL);
     }
 
     @Override
-    public void use(Monster monster, Entity target) {
-
+    public void use(Entity user, Entity target) {
+        setBaseDamage(8 * getLevel());
+        dealDamage(target, this);
     }
 }

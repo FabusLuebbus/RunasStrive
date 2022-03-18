@@ -1,7 +1,8 @@
-package gamemodelling.monsters;
+package gamemodelling.entities.monsters;
 
-import gamemodelling.Ability;
-import gamemodelling.Entity;
+import gamemodelling.abilities.Ability;
+import gamemodelling.entities.Entity;
+import gamemodelling.entities.Type;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -11,7 +12,7 @@ import java.util.Queue;
  */
 public abstract class Monster extends Entity implements Comparable<Monster> {
     private int ip;
-    private Type type = Type.BASIC;
+
     private boolean boss = false;
     private int blockAmount = 0;
     private int deflectAmount = 0;
@@ -22,13 +23,7 @@ public abstract class Monster extends Entity implements Comparable<Monster> {
         ip = number;
     }
 
-    public Type getType() {
-        return type;
-    }
 
-    public void setType(Type type) {
-        this.type = type;
-    }
 
     public boolean isBoss() {
         return boss;
@@ -65,7 +60,7 @@ public abstract class Monster extends Entity implements Comparable<Monster> {
     }
 
     @Override
-    protected String printAppendix() {
+    protected String printAttempts() {
         return ": attempts " + abilityQueue.peek().getName() + " next";
     }
 }

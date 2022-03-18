@@ -1,11 +1,11 @@
-package gamemodelling.monsters.level1;
+package gamemodelling.entities.monsters.level1;
 
 import gamemodelling.abilities.Focus;
 import gamemodelling.abilities.monsters.Bite;
 import gamemodelling.abilities.monsters.Block;
 import gamemodelling.abilities.monsters.MonsterLightning;
-import gamemodelling.monsters.Monster;
-import gamemodelling.monsters.Type;
+import gamemodelling.entities.monsters.Monster;
+import gamemodelling.entities.Type;
 
 import java.util.List;
 

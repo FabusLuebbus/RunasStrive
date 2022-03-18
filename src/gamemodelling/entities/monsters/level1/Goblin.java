@@ -1,9 +1,8 @@
-package gamemodelling.monsters.level1;
+package gamemodelling.entities.monsters.level1;
 
 import gamemodelling.abilities.monsters.Deflect;
 import gamemodelling.abilities.monsters.Smash;
-import gamemodelling.monsters.Monster;
-import gamemodelling.monsters.Type;
+import gamemodelling.entities.monsters.Monster;
 
 import java.util.List;
 

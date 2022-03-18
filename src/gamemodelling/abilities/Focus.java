@@ -1,9 +1,6 @@
 package gamemodelling.abilities;
 
-import gamemodelling.Ability;
-import gamemodelling.Entity;
-import gamemodelling.NonOffensiveAbility;
-import gamemodelling.Runa;
+import gamemodelling.entities.Entity;
 
 public class Focus extends NonOffensiveAbility {
     public Focus(int initLvl) {

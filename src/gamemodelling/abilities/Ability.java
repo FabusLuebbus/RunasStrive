@@ -1,6 +1,6 @@
-package gamemodelling;
+package gamemodelling.abilities;
 
-import gamemodelling.abilities.DamageType;
+import gamemodelling.entities.Entity;
 import states.Stage;
 
 public abstract class Ability implements Playable, Comparable<Ability> {

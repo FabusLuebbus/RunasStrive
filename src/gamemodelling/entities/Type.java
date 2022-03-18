@@ -1,4 +1,4 @@
-package gamemodelling.monsters;
+package gamemodelling.entities;
 
 public enum Type {
     LIGHTNING,

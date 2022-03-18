@@ -1,16 +1,18 @@
 package gamemodelling.abilities.monsters;
 
-import gamemodelling.Ability;
-import gamemodelling.Entity;
-import gamemodelling.monsters.Monster;
+import gamemodelling.entities.Entity;
+import gamemodelling.abilities.PhysicalOffensive;
+import gamemodelling.abilities.DamageType;
 
-public class Claw extends MonsterAbility {
+
+public class Claw extends PhysicalOffensive {
     public Claw(int initLvl) {
-        super(initLvl, 2);
+        super(initLvl, 2, DamageType.ANTI_FOCUS);
     }
 
     @Override
-    public void use(Monster monster, Entity target) {
-
+    public void use(Entity user, Entity target) {
+        setBaseDamage(6 * getLevel());
+        dealDamage(target, this);
     }
 }

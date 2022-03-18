@@ -1,24 +1,22 @@
 package gamemodelling.abilities.runa;
 
-import gamemodelling.Ability;
-import gamemodelling.Entity;
-import gamemodelling.OffensiveAbility;
-import gamemodelling.Runa;
+import gamemodelling.entities.Entity;
+import gamemodelling.abilities.MagicalOffensive;
+import gamemodelling.entities.runa.Runa;
 import gamemodelling.abilities.DamageType;
-import gamemodelling.monsters.Monster;
 
-import static game.GameUtil.attackMonster;
 
-public class Ice extends OffensiveAbility {
+
+public class Ice extends MagicalOffensive {
     public Ice(int initLvl) {
         super(initLvl, 9, DamageType.ICE);
     }
 
     @Override
-    public boolean use(Entity user, Entity target) {
-        Monster monster = (Monster) target;
+    public void use(Entity user, Entity target) {
         Runa runa = (Runa) user;
         setBaseDamage((2 * getLevel() + 5) * runa.getAvailableFocusPoints() + 2);
-        return attackMonster(monster, this);
+        runa.removeFocus(runa.getAvailableFocusPoints());
+        dealDamage(runa, target, this);
     }
 }

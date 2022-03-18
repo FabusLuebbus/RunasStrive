@@ -1,5 +1,6 @@
-package gamemodelling;
+package gamemodelling.abilities;
 
+import gamemodelling.entities.Entity;
 import states.Stage;
 
 public interface Playable {

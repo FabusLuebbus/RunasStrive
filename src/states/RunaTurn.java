@@ -1,11 +1,9 @@
 package states;
 
 import game.Game;
-import gamemodelling.Ability;
-import gamemodelling.Runa;
-
-import java.util.List;
-import java.util.Scanner;
+import UI.UI;
+import gamemodelling.abilities.Ability;
+import gamemodelling.abilities.NonOffensiveAbility;
 
 public class RunaTurn extends State {
     Stage stage;
@@ -17,20 +15,19 @@ public class RunaTurn extends State {
     @Override
     public void start() {
         stage.printFighters();
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Select card to play");
-        stage.printAbilities();
-        List<Ability> abilities = game.getRuna().getAbilities();
-        running = true;
-        while (running) {
-            System.out.println("Enter number [1--" + abilities.size() + "]:");
-            int input = scanner.nextInt();
-            if (input > abilities.size() || input < 1) {
-                continue;
-            }
-            abilities.get(input - 1).play(stage.fighters.get(0), stage.fighters.get(1), stage);
-            running = false;
+        game.getRuna().resetResistances();
+        Ability nextAbility = UI.selectCard(game.getRuna());
+        if (nextAbility instanceof NonOffensiveAbility) {
+            ((NonOffensiveAbility) nextAbility).play(stage.fighters.get(0));
+        } else {
+            nextAbility.play(stage.fighters.get(0), UI.selectTarget(stage), stage);
         }
-        nextState(new FocusPointsMonsters(game, stage));
+        stage.clearDeadMobs();
+
+        if (stage.fighters.size() == 1) {
+            nextState(new postFight(game, stage.getNumberOfMonsters()));
+        } else {
+            nextState(new FocusPointsMonsters(game, stage));
+        }
     }
 }

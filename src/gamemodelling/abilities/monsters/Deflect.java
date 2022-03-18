@@ -1,16 +1,15 @@
 package gamemodelling.abilities.monsters;
 
-import gamemodelling.Ability;
-import gamemodelling.Entity;
-import gamemodelling.monsters.Monster;
+import gamemodelling.entities.Entity;
+import gamemodelling.abilities.NonOffensiveAbility;
 
-public class Deflect extends MonsterAbility {
+public class Deflect extends NonOffensiveAbility {
     public Deflect(int initLvl) {
         super(initLvl, 8);
     }
 
     @Override
-    public void use(Monster monster, Entity target) {
-
+    public void use(Entity user) {
+        user.setMagicalBlock(11 * getLevel() + 2);
     }
 }

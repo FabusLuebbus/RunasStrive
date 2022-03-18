@@ -1,24 +1,28 @@
 package gamemodelling.abilities;
 
-import gamemodelling.monsters.Type;
+import gamemodelling.entities.Type;
 
 public enum DamageType {
-    BASIC_PHYSICAL("physical"),
-    ANTI_FOCUS("physical"),
-    BASIC_MAGICAL("magical"),
-    WATER("magical", Type.LIGHTNING),
-    ICE("magical", Type.WATER),
-    FIRE("magical", Type.ICE),
-    LIGHTNING("magical", Type.FIRE);
+    PHYSICAL_BASE(),
+    MAGICAL_BASE(),
+    PHYSICAL(PHYSICAL_BASE),
+    ANTI_FOCUS(PHYSICAL_BASE),
+    WATER(MAGICAL_BASE, Type.LIGHTNING),
+    ICE(MAGICAL_BASE, Type.WATER),
+    FIRE(MAGICAL_BASE, Type.ICE),
+    LIGHTNING(MAGICAL_BASE, Type.FIRE);
 
-    private String basicType;
+
     private Type effective;
+    private DamageType basicType;
 
-    DamageType(String basicType) {
-        this.basicType = basicType;
+    DamageType() {
+    }
+    DamageType(DamageType basic) {
+        basicType = basic;
     }
 
-    DamageType(String basicType, Type effective) {
+    DamageType(DamageType basicType, Type effective) {
         this(basicType);
         this.effective = effective;
     }
@@ -27,7 +31,11 @@ public enum DamageType {
         return effective;
     }
 
-    public String getBasicType() {
+    public DamageType getBasicType() {
         return basicType;
+    }
+
+    public String toString() {
+        return this.basicType.name().toLowerCase();
     }
 }

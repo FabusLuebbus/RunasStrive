@@ -1,16 +1,15 @@
 package gamemodelling.abilities.monsters;
 
-import gamemodelling.Ability;
-import gamemodelling.Entity;
-import gamemodelling.monsters.Monster;
+import gamemodelling.entities.Entity;
+import gamemodelling.abilities.NonOffensiveAbility;
 
-public class Block extends MonsterAbility {
+public class Block extends NonOffensiveAbility {
     public Block(int initLvl) {
         super(initLvl, 7);
     }
 
     @Override
-    public void use(Monster monster, Entity target) {
-
+    public void use(Entity user) {
+        user.setPhysicalResistance(7 * getLevel());
     }
 }
