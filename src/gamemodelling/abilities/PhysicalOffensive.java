@@ -1,5 +1,6 @@
 package gamemodelling.abilities;
 
+import UI.newUI;
 import gamemodelling.entities.Entity;
 
 public abstract class PhysicalOffensive extends OffensiveAbility {
@@ -22,5 +23,12 @@ public abstract class PhysicalOffensive extends OffensiveAbility {
             target.removeHealth(actualDamage, PHY_DMG);
         }
     }
+
+    @Override
+    public void play(Entity user, Entity target, newUI newUI) {
+        use(user, target, newUI);
+    }
+
+    public abstract void use(Entity user, Entity target, newUI newUI);
 
 }

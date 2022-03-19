@@ -1,6 +1,6 @@
 package gamemodelling.entities;
 
-import UI.UI;
+import UI.newUI;
 import gamemodelling.abilities.Ability;
 
 import java.util.ArrayList;
@@ -75,10 +75,10 @@ public abstract class Entity implements Living {
         this.potentialFocusGain = potentialFocusGain;
     }
 
-    public void givePotentialFocus() {
+    public void givePotentialFocus(newUI newUI) {
         if (isChanneling()) {
             //TODO random output
-            UI.stateFocusGain(this);
+            newUI.stateFocusGain(this);
             addFocus(getPotentialFocusGain());
             setChanneling(false);
         }
@@ -90,9 +90,7 @@ public abstract class Entity implements Living {
         magicalReflect = 0;
     }
 
-    public String getName() {
-        return getClass().getSimpleName();
-    }
+    public abstract String getName();
 
     @Override
     public void addFocus(int amount) {
@@ -113,6 +111,12 @@ public abstract class Entity implements Living {
 
     public void addAbility(Ability newAbility) {
         abilities.add(newAbility);
+    }
+
+    public void addAbilities(List<Ability> abilities) {
+        for (Ability ability : abilities) {
+            addAbility(ability);
+        }
     }
 
     public void print() {

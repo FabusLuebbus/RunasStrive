@@ -1,5 +1,6 @@
 package gamemodelling.abilities;
 
+import UI.newUI;
 import gamemodelling.entities.Entity;
 import states.Stage;
 
@@ -28,21 +29,12 @@ public abstract class OffensiveAbility extends Ability {
     public DamageType getDmgType() {
         return dmgType;
     }
-    public String getShortType() {
-        return ' ' + dmgType.toString().substring(0, 3) + ". damage";
+
+    @Override
+    public void play(Entity user, newUI newUI) {
+        newUI.stateAbilityUsage(user, this);
+        play(user, newUI.selectTarget(), newUI);
     }
 
-    public abstract void use(Entity user, Entity target);
-
-
-    public void play(Entity user, Entity target, Stage stage) {
-        /* //TODO
-        if (!checkIfAllowed()) {
-            return;
-        }
-
-         */
-        System.out.println(user.getName() + " uses " + this.getName());
-        use(user, target);
-    }
+    public abstract void play(Entity user, Entity target, newUI newUI);
 }

@@ -21,11 +21,7 @@ public class MonsterTurn extends State {
             Monster monster = (Monster) stage.fighters.get(i);
             monster.resetResistances();
             Ability nextAbility = monster.getNextAbility();
-            if (nextAbility instanceof NonOffensiveAbility) {
-                ((NonOffensiveAbility) nextAbility).play(monster);
-            } else {
-                nextAbility.play(monster, runa, stage);
-            }
+            nextAbility.play(monster, newUI);
         }
         stage.clearDeadMobs();
         if (stage.fighters.size() == 1) {

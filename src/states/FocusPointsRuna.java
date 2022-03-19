@@ -15,7 +15,7 @@ public class FocusPointsRuna extends State {
     @Override
     public void start() {
         //all monsters
-        game.getRuna().givePotentialFocus();
+        game.getRuna().givePotentialFocus(newUI);
         nextState(new RunaTurn(game, stage));
     }
 }

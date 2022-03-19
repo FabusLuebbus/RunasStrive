@@ -3,18 +3,21 @@ package UI;
 import gamemodelling.abilities.Ability;
 import gamemodelling.entities.Entity;
 import gamemodelling.entities.runa.Runa;
+import gamemodelling.entities.runa.RunaClasses;
 
 import java.util.List;
 
 public interface UserInterface {
 
-    Runa SetupAndGetInitialRuna();
+    RunaClasses setupAndGetInitialRunaClass();
+
+    List<Integer> getMultipleInputs(int amount, String request);
 
     int[] getShuffleSeeds();
 
-    void stateRoomEntering(int Stage, int level);
+    void stateRoomEntering();
 
-    Ability selectAbility();
+    Ability selectAbilityToPlay();
 
     Entity selectTarget();
 
@@ -24,9 +27,9 @@ public interface UserInterface {
 
     List<Ability> selectHealingDiscard();
 
-    int getDiceRoll();
+    void stateFocusGain(Entity entity);
 
-    void stateFocusGain();
+    void stateDieUpgrade(Runa runa);
 
-    void stateDieUpgrade();
+    void stateAbilityUsage(Entity user, Ability ability);
 }

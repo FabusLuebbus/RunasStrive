@@ -1,8 +1,10 @@
 package states;
 
 import game.Game;
-import UI.UI;
+import UI.newUI;
 import gamemodelling.abilities.Ability;
+
+import java.util.List;
 
 public class postFight extends State {
     int defeatedEnemies;
@@ -15,19 +17,19 @@ public class postFight extends State {
     public void start() {
         int choice = 1;
         if (game.getRuna().getMaxFocusPoints() < 12) {
-            choice = UI.getRewardChoice();
+            choice = newUI.selectRewardOption();
         }
         switch (choice) {
             case 2:
-                game.getRuna().upgradeDie();
+                game.getRuna().upgradeDie(newUI);
                 break;
             case 1:
-                Ability[] selectedAbilities = UI.getAbilityChoice(choices, defeatedEnemies);
+                List<Ability> selectedAbilities = newUI.selectRewardAbilities();
                 for (Ability ability : selectedAbilities) {
                     game.getRuna().addAbility(ability);
                 }
         }
         //healing
-        Ability[] discardAbilities = UI.getAbilityChoice(game.getRuna().getAbilities().toArray(new Ability[0]), )
+        List<Ability> discardAbilities = newUI.selectHealingDiscard();
     }
 }

@@ -1,5 +1,6 @@
 package gamemodelling.abilities.monsters;
 
+import UI.newUI;
 import gamemodelling.entities.Entity;
 import gamemodelling.abilities.PhysicalOffensive;
 import gamemodelling.abilities.DamageType;
@@ -12,7 +13,7 @@ public class Smash extends PhysicalOffensive {
     }
 
     @Override
-    public void use(Entity user, Entity target) {
+    public void use(Entity user, Entity target, newUI newUI) {
         setBaseDamage(8 * getLevel());
         dealDamage(target, this);
     }

@@ -18,7 +18,7 @@ public class FocusPointsMonsters extends State {
         //all monsters
         for (int i = 1; i < stage.fighters.size(); i++) {
             Entity entity = stage.fighters.get(i);
-            entity.givePotentialFocus();
+            entity.givePotentialFocus(newUI);
         }
         nextState(new MonsterTurn(game, stage));
     }

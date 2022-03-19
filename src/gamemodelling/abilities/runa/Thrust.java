@@ -1,6 +1,6 @@
 package gamemodelling.abilities.runa;
 
-import UI.UI;
+import UI.newUI;
 import gamemodelling.entities.Entity;
 import gamemodelling.abilities.PhysicalOffensive;
 import gamemodelling.entities.runa.Runa;
@@ -14,9 +14,9 @@ public class Thrust extends PhysicalOffensive {
     }
 
     @Override
-    public void use(Entity user, Entity target) {
+    public void use(Entity user, Entity target, newUI newUI) {
         Runa runa = (Runa) user;
-        int diceRoll = UI.getDiceRoll(runa.getMaxFocusPoints());
+        int diceRoll = newUI.getDiceRoll(runa.getMaxFocusPoints());
         setBaseDamage(6 * getLevel() + diceRoll);
         if (diceRoll > 5) {
             addBaseDamage(4 * getLevel());

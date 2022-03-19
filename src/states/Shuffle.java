@@ -1,7 +1,6 @@
 package states;
 
 import game.Game;
-import UI.UI;
 import gamemodelling.abilities.Ability;
 
 import java.util.Collections;
@@ -16,7 +15,7 @@ public class Shuffle extends State {
 
     @Override
     public void start() {
-        int[] seeds = UI.getShuffleSeeds();
+        int[] seeds = newUI.getShuffleSeeds();
 
         List<Ability> tempAbilityList = game.getAbilityList();
         Collections.shuffle(tempAbilityList, new Random(seeds[0]));
@@ -24,6 +23,6 @@ public class Shuffle extends State {
         Collections.shuffle(game.getMonsterList(), new Random(seeds[1]));
         game.addMonstersToQueue(game.getMonsterList());
                 
-        nextState(new Stage1(game));
+        nextState(new Stage(game));
     }
 }

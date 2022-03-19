@@ -1,5 +1,6 @@
 package gamemodelling.abilities;
 
+import UI.newUI;
 import gamemodelling.entities.Entity;
 import states.Stage;
 
@@ -11,20 +12,9 @@ public abstract class NonOffensiveAbility extends Ability {
 
     public abstract void use(Entity user);
 
-    public void play(Entity user) {
-        /*
-        if (!checkIfAllowed()) {
-            return;
-        }
-
-         */
-        System.out.println(user.getName() + " uses " + this.getName());
-        this.use(user);
-
-    }
-
     @Override
-    public void play(Entity user, Entity target, Stage stage) {
-        throw new IllegalArgumentException("this ability has the user as target");
+    public void play(Entity user, newUI newUI) {
+        newUI.stateAbilityUsage(user, this);
+        use(user);
     }
 }

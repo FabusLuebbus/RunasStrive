@@ -1,5 +1,6 @@
 package gamemodelling.abilities;
 
+import UI.newUI;
 import gamemodelling.entities.Entity;
 import states.Stage;
 
@@ -17,8 +18,7 @@ public abstract class Ability implements Playable, Comparable<Ability> {
         level = lvl;
     }
 
-    @Override
-    public abstract void play(Entity user, Entity target, Stage stage);
+    public abstract void play(Entity user, newUI newUI);
 
     @Override
     public boolean checkIfAllowed() {
@@ -45,5 +45,24 @@ public abstract class Ability implements Playable, Comparable<Ability> {
     @Override
     public int compareTo(Ability ability) {
         return Integer.compare(this.ip, ability.ip);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+
+        if (!(o instanceof Ability)) {
+            return false;
+        }
+
+        Ability other = (Ability) o;
+        return getName().equals(other.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return 42;
     }
 }

@@ -1,5 +1,6 @@
 package gamemodelling.abilities.monsters;
 
+import UI.newUI;
 import gamemodelling.entities.Entity;
 import gamemodelling.abilities.PhysicalOffensive;
 import gamemodelling.abilities.DamageType;
@@ -13,7 +14,7 @@ public class Scratch extends PhysicalOffensive {
     }
 
     @Override
-    public void use(Entity user, Entity target) {
+    public void use(Entity user, Entity target, newUI newUI) {
         Monster monster = (Monster) target;
         setBaseDamage(5 * getLevel());
         if (monster.getType() == getDmgType().getEffective()) {

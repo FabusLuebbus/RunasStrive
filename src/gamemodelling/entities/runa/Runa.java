@@ -1,22 +1,25 @@
 package gamemodelling.entities.runa;
 
 
-import UI.UI;
+import UI.newUI;
 import gamemodelling.abilities.Ability;
 import gamemodelling.entities.Entity;
 
 public class Runa extends Entity {
     private int maxFocusPoints;
+    RunaClasses runaClass;
 
-    public Runa() {
+    public Runa(RunaClasses runaClass) {
         super(50);
         maxFocusPoints = 4;
         addFocus(1);
+        this.runaClass = runaClass;
+        addAbilities(this.runaClass.getStartingAbilities());
     }
 
-    public void upgradeDie() {
+    public void upgradeDie(newUI newUI) {
         maxFocusPoints += 2;
-        UI.stateDieUpgrade(this);
+        newUI.stateDieUpgrade(this);
     }
 
     public int getMaxFocusPoints() {
@@ -42,16 +45,12 @@ public class Runa extends Entity {
     }
 
     @Override
+    public String getName() {
+        return "Runa";
+    }
+
+    @Override
     protected String printAttempts() {
         return "";
     }
-
-    public void printAbilities() {
-        for (int i = 1; i <= getAbilities().size(); i++) {
-            Ability ability = getAbilities().get(i - 1);
-            System.out.println(i + ") " + ability.getName());
-        }
-    }
-
-
 }

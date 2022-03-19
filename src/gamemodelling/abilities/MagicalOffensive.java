@@ -1,5 +1,6 @@
 package gamemodelling.abilities;
 
+import UI.newUI;
 import gamemodelling.entities.Entity;
 
 public abstract class MagicalOffensive extends OffensiveAbility {
@@ -9,6 +10,13 @@ public abstract class MagicalOffensive extends OffensiveAbility {
     public MagicalOffensive(int initLvl, int ip, DamageType dmgType) {
         super(initLvl, ip, dmgType);
     }
+
+    @Override
+    public void play(Entity user, Entity target, newUI newUI) {
+        use(user, target);
+    }
+
+    public abstract void use(Entity user, Entity target);
 
     /**
      * decided to make it possible for every entity to have magical block and reflect since both effects already exist
