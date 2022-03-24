@@ -1,16 +1,15 @@
 package states;
 
 import game.Game;
-import UI.newUI;
 import gamemodelling.abilities.Ability;
 
 import java.util.List;
 
 public class postFight extends State {
-    int defeatedEnemies;
-    public postFight(Game context, int defeatedEnemies) {
+    int numOfRewardCards;
+    public postFight(Game context, int numOfRewardCards) {
         super(context);
-        this.defeatedEnemies = defeatedEnemies;
+        this.numOfRewardCards = numOfRewardCards;
     }
 
     @Override
@@ -24,7 +23,7 @@ public class postFight extends State {
                 game.getRuna().upgradeDie(newUI);
                 break;
             case 1:
-                List<Ability> selectedAbilities = newUI.selectRewardAbilities();
+                List<Ability> selectedAbilities = newUI.selectRewardAbilities(numOfRewardCards);
                 for (Ability ability : selectedAbilities) {
                     game.getRuna().addAbility(ability);
                 }

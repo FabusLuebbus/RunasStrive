@@ -11,7 +11,7 @@ import java.util.Queue;
  * abilities will be modelled as cards by themselves since they work exactly like that
  */
 public class Monster extends Entity implements Comparable<Monster> {
-    private int ip;
+    private int id;
     private final String name;
     private boolean boss;
     private int blockAmount = 0;
@@ -21,7 +21,7 @@ public class Monster extends Entity implements Comparable<Monster> {
     public Monster(Monsters monsterValue) {
         super(monsterValue.maxHP);
         boss = monsterValue.boss;
-        ip = monsterValue.ip;
+        id = monsterValue.id;
         setType(monsterValue.type);
         abilityQueue.addAll(monsterValue.abilities);
         name = monsterValue.toString();
@@ -58,7 +58,7 @@ public class Monster extends Entity implements Comparable<Monster> {
 
     @Override
     public int compareTo(Monster monster) {
-        return Integer.compare(this.ip, monster.ip);
+        return Integer.compare(this.id, monster.id);
     }
 
     @Override

@@ -19,7 +19,7 @@ public class RunaTurn extends State {
         nextAbility.play(stage.fighters.get(0), newUI);
         stage.clearDeadMobs();
 
-        if (stage.fighters.size() == 1) {
+        if (stage.fighters.size() == 1 && stage.fighters.contains(game.getRuna())) {
             nextState(new postFight(game, stage.getNumberOfMonsters()));
         } else {
             nextState(new FocusPointsMonsters(game, stage));

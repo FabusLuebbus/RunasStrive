@@ -23,7 +23,7 @@ public interface UserInterface {
 
     int selectRewardOption();
 
-    List<Ability> selectRewardAbilities();
+    List<Ability> selectRewardAbilities(int amount);
 
     List<Ability> selectHealingDiscard();
 

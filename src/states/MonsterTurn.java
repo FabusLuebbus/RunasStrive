@@ -21,10 +21,12 @@ public class MonsterTurn extends State {
             Monster monster = (Monster) stage.fighters.get(i);
             monster.resetResistances();
             Ability nextAbility = monster.getNextAbility();
-            nextAbility.play(monster, newUI);
+            nextAbility.play(monster, game.getRuna(), newUI);
         }
         stage.clearDeadMobs();
-        if (stage.fighters.size() == 1) {
+        if (game.getRuna().getHealthPoints() <= 0) {
+            nextState(new GameOver(game));
+        } else if (stage.fighters.size() == 1 && stage.fighters.contains(game.getRuna())) {
             nextState(new postFight(game, stage.getNumberOfMonsters()));
         } else {
             nextState(new FocusPointsRuna(game, stage));

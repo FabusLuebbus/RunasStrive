@@ -53,8 +53,12 @@ public class Game {
         abilityList.addAll(abilities);
     }
 
-    public void addAbilitiesToQueue(List<Ability> abilities) {
+    public void addAbilitiesToList(List<Ability> abilities) {
         abilityList.addAll(abilities);
+    }
+
+    public void removeAbilitiesFromList(List<Ability> abilities) {
+        abilityList.removeAll(abilities);
     }
 
     public void addMonsters(List<Monster> monsters) {

@@ -8,6 +8,7 @@ import gamemodelling.entities.runa.RunaClasses;
 import states.Stage;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -139,12 +140,30 @@ public class newUI implements UserInterface {
 
     @Override
     public int selectRewardOption() {
-        return 0;
+        System.out.println("Choose Runa’s reward\n1) new ability cards\n2) next player dice");
+        return getSingleInput(2);
     }
 
     @Override
-    public List<Ability> selectRewardAbilities() {
-        return null;
+    public List<Ability> selectRewardAbilities(int amount) {
+        System.out.println("Pick " + amount + " card(s) as loot");
+        List<Ability> abilities = game.getAbilityList();
+        List<Ability> offeredAbilities = List.copyOf(abilities.subList(0, Math.min((2 * amount), abilities.size())));
+        List<Ability> chosenAbilities = new LinkedList<>();
+        for (int i = 0; i < offeredAbilities.size(); i++) {
+            System.out.println((i + 1) + ") " + offeredAbilities.get(i).getName());
+        }
+        List<Integer> choices = new LinkedList<Integer>();
+        if (amount == 1) {
+            choices.add(getSingleInput(amount * 2));
+        } else {
+            choices.addAll(getMultipleInputs(amount, "Enter numbers [1--" + (amount * 2) + "] separated by comma:"));
+        }
+        for (int i : choices) {
+            chosenAbilities.add(offeredAbilities.get(i - 1));
+        }
+        game.removeAbilitiesFromList(offeredAbilities);
+        return chosenAbilities;
     }
 
     @Override

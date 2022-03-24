@@ -13,6 +13,11 @@ public abstract class NonOffensiveAbility extends Ability {
     public abstract void use(Entity user);
 
     @Override
+    public void play(Entity user, Entity target, newUI newUI) {
+        play(user, newUI);
+    }
+
+    @Override
     public void play(Entity user, newUI newUI) {
         newUI.stateAbilityUsage(user, this);
         use(user);

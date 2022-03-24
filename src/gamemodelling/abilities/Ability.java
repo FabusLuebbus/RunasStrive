@@ -20,6 +20,8 @@ public abstract class Ability implements Playable, Comparable<Ability> {
 
     public abstract void play(Entity user, newUI newUI);
 
+    public abstract void play(Entity user, Entity target, newUI newUI);
+
     @Override
     public boolean checkIfAllowed() {
         return false;

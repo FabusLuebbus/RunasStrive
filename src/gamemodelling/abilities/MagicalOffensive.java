@@ -13,6 +13,7 @@ public abstract class MagicalOffensive extends OffensiveAbility {
 
     @Override
     public void play(Entity user, Entity target, newUI newUI) {
+        newUI.stateAbilityUsage(user, this);
         use(user, target);
     }
 

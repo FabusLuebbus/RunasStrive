@@ -66,14 +66,14 @@ public enum Monsters {
     final int level;
     final boolean boss;
     final Type type;
-    final int ip;
+    final int id;
     final int maxHP;
     final List<Ability> abilities = new LinkedList<>();
 
-    Monsters(int level, boolean boss, int ip, int maxHP, Type type, List<Ability> abilities) {
+    Monsters(int level, boolean boss, int id, int maxHP, Type type, List<Ability> abilities) {
         this.level = level;
         this.boss = boss;
-        this.ip = ip;
+        this.id = id;
         this.maxHP = maxHP;
         this.type = type;
         this.abilities.addAll(abilities);
