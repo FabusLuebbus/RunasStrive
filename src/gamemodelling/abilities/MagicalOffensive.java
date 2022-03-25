@@ -46,8 +46,9 @@ public abstract class MagicalOffensive extends OffensiveAbility {
         if (actualDamage > 0) {
             target.removeHealth(actualDamage, MAG_DMG);
         }
-        if (reflectDamage > 0) {
+        if (reflectDamage > 0 && target.getHealthPoints() > 0) {
             user.removeHealth(reflectDamage, MAG_DMG);
+            reflectDamage = 0;
         }
     }
 }

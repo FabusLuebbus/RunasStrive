@@ -32,4 +32,8 @@ public interface UserInterface {
     void stateNewAbilities(List<Ability> abilities);
 
     void stateAbilityUsage(Entity user, Ability ability);
+
+    void stateLoss();
+
+    void stateWin();
 }

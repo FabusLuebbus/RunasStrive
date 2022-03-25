@@ -78,9 +78,11 @@ public abstract class Entity implements Living {
 
     public void givePotentialFocus(newUI newUI) {
         if (isChanneling()) {
-            //TODO random output
-            newUI.stateFocusGain(this);
-            addFocus(getPotentialFocusGain());
+            int focusGain = getPotentialFocusGain();
+            if (focusGain > 0) {
+                newUI.stateFocusGain(this);
+                addFocus(getPotentialFocusGain());
+            }
             setChanneling(false);
         }
     }

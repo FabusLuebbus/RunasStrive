@@ -32,6 +32,10 @@ public abstract class OffensiveAbility extends Ability {
 
     @Override
     public void play(Entity user, newUI newUI) {
-        play(user, newUI.selectTarget(), newUI);
+        Entity target = newUI.selectTarget();
+        if (target == null) {
+            return;
+        }
+        play(user, target, newUI);
     }
 }

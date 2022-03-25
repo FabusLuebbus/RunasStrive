@@ -19,6 +19,9 @@ public class RunaTurn extends State {
             return;
         }
         nextAbility.play(game.getRuna(), newUI);
+        if (game.isAbort()) {
+            return;
+        }
         stage.clearDeadMobs();
 
         if (stage.getMonsters().isEmpty()) {

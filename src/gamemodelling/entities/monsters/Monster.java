@@ -52,8 +52,8 @@ public class Monster extends Entity implements Comparable<Monster> {
     }
 
     public void print() {
-        System.out.println(getName() + " (" + getHealthPoints() + '/' + getMaxHealth() + "HP, "
-                + getFocusPoints() + "FP)" + printAttempts());
+        System.out.println(getName() + " (" + getHealthPoints() + " HP, "
+                + getFocusPoints() + " FP)" + printAttempts());
     }
 
     public Ability getNextAbility() {

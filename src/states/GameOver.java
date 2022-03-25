@@ -9,6 +9,8 @@ public class GameOver extends State {
 
     @Override
     public void start() {
-        throw new RuntimeException("not implemented yet");
+        if (game.getRuna().getHealthPoints() > 0) {
+            newUI.stateWin();
+        }
     }
 }

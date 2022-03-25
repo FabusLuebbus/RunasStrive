@@ -53,12 +53,17 @@ public class Runa extends Entity {
     }
 
     @Override
+    public int getPotentialFocusGain() {
+        return Math.min(super.getPotentialFocusGain(), maxFocusPoints - getFocusPoints());
+    }
+
+    @Override
     public String getName() {
         return "Runa";
     }
 
     public void print() {
-        System.out.println(getName() + " (" + getHealthPoints() + '/' + getMaxHealth() + "HP, "
+        System.out.println(getName() + " (" + getHealthPoints() + '/' + getMaxHealth() + " HP, "
                 + getFocusPoints() + '/' + getMaxFocusPoints() + " FP)" + printAttempts());
     }
 

@@ -22,13 +22,15 @@ public class MonsterTurn extends State {
             Ability nextAbility;
             do {
                 nextAbility = monster.getNextAbility();
-            } while (nextAbility.needsFocus() && monster.getFocusPoints() == 0);
+            } while (monster.getFocusPoints() < nextAbility.getLevel() && nextAbility.needsFocus());
             nextAbility.play(monster, runa, newUI);
+            if (runa.getHealthPoints() <= 0) {
+                nextState(new GameOver(game));
+                return;
+            }
         }
         stage.clearDeadMobs();
-        if (runa.getHealthPoints() <= 0) {
-            nextState(new GameOver(game));
-        } else if (stage.getMonsters().isEmpty()) {
+        if (stage.getMonsters().isEmpty()) {
             nextState(new postFight(game, stage.getNumberOfMonsters()));
         } else {
             nextState(new FocusPointsRuna(game, stage));

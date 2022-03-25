@@ -16,7 +16,7 @@ public class Lightning extends MagicalOffensive {
     public void use(Entity user, Entity target) {
         Runa runa = (Runa) user;
         setBaseDamage((2 * getLevel() + 5) * runa.getFocusPoints() + 2);
-        runa.removeFocus(runa.getFocusPoints());
+        runa.removeFocus(1);
         dealDamage(runa, target, this);
     }
 }

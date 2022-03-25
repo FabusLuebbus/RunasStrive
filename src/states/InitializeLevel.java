@@ -46,24 +46,24 @@ public class InitializeLevel extends State {
                         new Monster(Monsters.GOBLIN), new Monster(Monsters.RAT), new Monster(Monsters.MUSHROOMLIN)));
 
                 game.getAbilityList().removeAll(game.getRuna().getAbilities());
+                Collections.sort(game.getRuna().getAbilities());
                 break;
             case 2:
-                for (Ability ability : game.getAbilityList()) {
-                    ability.setLvl(2);
-                }
                 game.getMonsterList().clear();
+                game.getAbilityList().clear();
                 game.clearMonsterQueue();
                 game.setCurrentStageBoss(new Monster(Monsters.MEGA_SAURUS));
+                game.addAbilities(List.of(new Slash(2), new Swing(2), new Thrust(2), new Pierce(2), new Parry(2),
+                        new Focus(2), new Reflect(2), new Water(2), new Ice(2), new Fire(2), new Lightning(2)));
                 game.addMonsters(List.of(new Monster(Monsters.SNAKE), new Monster(Monsters.DARK_ELF),
                         new Monster(Monsters.SHADOW_BLADE), new Monster(Monsters.HORNET),
                         new Monster(Monsters.TARANTULA), new Monster(Monsters.BEAR),
                         new Monster(Monsters.MUSHROOMLON), new Monster(Monsters.WILD_BOAR)));
+                game.getAbilityList().removeAll(game.getRuna().getRunaClass().getAbilityUpgrade());
                 break;
             default:
                 break;
         }
-
-        Collections.sort(game.getRuna().getAbilities());
         Collections.sort(game.getMonsterList());
         nextState(new Shuffle(game));
     }

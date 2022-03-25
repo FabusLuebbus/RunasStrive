@@ -15,8 +15,8 @@ public class Ice extends MagicalOffensive {
     @Override
     public void use(Entity user, Entity target) {
         Runa runa = (Runa) user;
-        setBaseDamage((2 * getLevel() + 5) * runa.getFocusPoints() + 2);
-        runa.removeFocus(runa.getFocusPoints());
+        setBaseDamage((2 * getLevel() + 4) * runa.getFocusPoints() + 2);
+        runa.removeFocus(1);
         dealDamage(runa, target, this);
     }
 }

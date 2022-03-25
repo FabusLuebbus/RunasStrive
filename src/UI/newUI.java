@@ -53,15 +53,15 @@ public class newUI implements UserInterface {
     }
 
 
-    public List<Integer> getMultipleInputs(int amount, String request, boolean allowNoAction, boolean allowDoubleEntries) {
+    public List<Integer> getMultipleInputs(int amount, String request, int upperBoundary, boolean allowNoAction, boolean allowDoubleEntries) {
         List<Integer> inputs;
         do {
-            inputs = getMultipleInputs(request, allowNoAction, allowDoubleEntries);
+            inputs = getMultipleInputs(request, upperBoundary, allowNoAction, allowDoubleEntries);
         } while (inputs.size() != amount && inputs.get(0) != QUIT_INT);
         return inputs;
     }
 
-    private List<Integer> getMultipleInputs(String request, boolean allowNoAction, boolean allowDoubleEntries) {
+    private List<Integer> getMultipleInputs(String request, int upperBoundary, boolean allowNoAction, boolean allowDoubleEntries) {
         //Todo make no input possible
         List<Integer> inputs = new ArrayList<>();
         boolean repeat = true;
@@ -78,9 +78,10 @@ public class newUI implements UserInterface {
                 }
 
                 //TODO use isEmpty() here
-                if (partAsInt < QUIT_INT || (!allowNoAction && partAsInt == NO_ACTION_INT)
+                if (partAsInt < QUIT_INT || partAsInt > upperBoundary || (!allowNoAction && partAsInt == NO_ACTION_INT)
                         || (!allowDoubleEntries && inputs.contains(partAsInt))) {
                     repeat = true;
+                    inputs.clear();
                     break;
                 }
                 inputs.add(i, partAsInt);
@@ -92,7 +93,7 @@ public class newUI implements UserInterface {
     @Override
     public int[] getShuffleSeeds() {
         System.out.println("To shuffle ability cards and monsters, enter two seeds");
-        List<Integer> seedList = getMultipleInputs(2, "Enter seeds [1--2147483647] separated by comma:", false, true);
+        List<Integer> seedList = getMultipleInputs(2,  "Enter seeds [1--2147483647] separated by comma:", Integer.MAX_VALUE, false, true);
         return seedList.stream().mapToInt(Integer::intValue).toArray();
     }
 
@@ -142,16 +143,20 @@ public class newUI implements UserInterface {
         if (monsters.size() == 1) {
             return monsters.get(0);
         }
-        System.out.println("Select Runa’s target.");
+        System.out.println("Select Runa's target.");
         for (int i = 0; i < monsters.size(); i++) {
             System.out.println((i + 1) + ") " + monsters.get(i).getName());
         }
-        return monsters.get(getSingleInput(monsters.size(), false) - 1);
+        int choice = getSingleInput(monsters.size(), false);
+        if (choice == QUIT_INT) {
+            return null;
+        }
+        return monsters.get(choice - 1);
     }
 
     @Override
     public int selectRewardOption() {
-        System.out.println("Choose Runa’s reward\n1) new ability cards\n2) next player dice");
+        System.out.println("Choose Runa's reward\n1) new ability cards\n2) next player dice");
         int input;
         do {
             input = getSingleInput(2, false);
@@ -170,8 +175,8 @@ public class newUI implements UserInterface {
             if (amount == 1) {
                 choices.add(getSingleInput(amount * 2, false));
             } else {
-                choices = (getMultipleInputs(amount, "Enter numbers [1--" + (amount * 2)
-                        + "] separated by comma:", false, false));
+                choices = (getMultipleInputs(amount, "Enter numbers [1--" + offeredAbilities.size()
+                        + "] separated by comma:", offeredAbilities.size(), false, false));
             }
         } while (choices.get(0) == NO_ACTION_INT);
         if (choices.get(0) == QUIT_INT) {
@@ -195,7 +200,7 @@ public class newUI implements UserInterface {
         } else {
             do {
                 choices = getMultipleInputs("Enter numbers [1--" + runaAbilities.size()
-                        + "] separated by comma:", true, false);
+                        + "] separated by comma:", runaAbilities.size(), true, false);
             } while (choices.size() > maxDiscardAmount);
         }
         if (choices.get(0) == NO_ACTION_INT || choices.get(0) == QUIT_INT) {
@@ -224,7 +229,6 @@ public class newUI implements UserInterface {
     @Override
     public void stateFocusGain(Entity entity) {
         System.out.println(entity.getName() + " gains " + entity.getPotentialFocusGain() + " focus");
-
     }
 
     @Override
@@ -242,6 +246,16 @@ public class newUI implements UserInterface {
     @Override
     public void stateAbilityUsage(Entity user, Ability ability) {
         System.out.println(user.getName() + " uses " + ability.getName());
+    }
+
+    @Override
+    public void stateLoss() {
+        System.out.println("Runa dies");
+    }
+
+    @Override
+    public void stateWin() {
+        System.out.println("Runa won!");
     }
 
     public int getDiceRoll(int upperBoundary) {

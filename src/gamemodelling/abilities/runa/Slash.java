@@ -17,6 +17,10 @@ public class Slash extends PhysicalOffensive {
     public void use(Entity user, Entity target, newUI newUI) {
         Runa runa = (Runa) user;
         int diceRoll = newUI.getDiceRoll(runa.getMaxFocusPoints());
+        //todo quitint
+        if (diceRoll == -1) {
+            return;
+        }
         setBaseDamage(4 * getLevel() + diceRoll);
         dealDamage(target, this);
     }

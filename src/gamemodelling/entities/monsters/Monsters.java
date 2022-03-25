@@ -47,7 +47,7 @@ public enum Monsters {
     //Level 2 Monsters
     //
     SNAKE(2, false, 1, 31, Type.ICE,
-            List.of(new Bite(2), new Focus(2), new Ice(2))),
+            List.of(new Bite(2), new Focus(2), new MonsterIce(2))),
     DARK_ELF(2, false, 2, 34, Type.BASIC,
             List.of(new Focus(2), new MonsterWater(1), new MonsterLightning(1))),
     SHADOW_BLADE(2, false, 3, 27, Type.LIGHTNING,
@@ -84,8 +84,9 @@ public enum Monsters {
         String[] lowerCaseParts = this.name().toLowerCase().split("_");
         StringBuilder output = new StringBuilder();
         for (String part : lowerCaseParts) {
-            output.append(part.substring(0, 1).toUpperCase()).append(part.substring(1));
+            output.append(part.substring(0, 1).toUpperCase()).append(part.substring(1)).append(' ');
         }
-        return output.toString();
+        String outputString = output.toString();
+        return outputString.substring(0, outputString.length() - 1);
     }
 }

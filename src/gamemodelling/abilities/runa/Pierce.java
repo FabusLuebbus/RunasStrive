@@ -17,9 +17,13 @@ public class Pierce extends PhysicalOffensive {
     public void use(Entity user, Entity target, newUI newUI) {
         Runa runa = (Runa) user;
         int diceRoll = newUI.getDiceRoll(runa.getMaxFocusPoints());
+        //todo quitint
+        if (diceRoll == -1) {
+            return;
+        }
         setBaseDamage(7 * getLevel() + diceRoll);
         if (diceRoll > 5) {
-            addBaseDamage(4 * getLevel());
+            addBaseDamage(5 * getLevel());
         }
         dealDamage(target, this);
     }
