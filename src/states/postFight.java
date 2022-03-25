@@ -34,12 +34,19 @@ public class postFight extends State {
             if (runa.getMaxFocusPoints() < 12) {
                 choice = newUI.selectRewardOption();
             }
+            //todo quit int
+            if (game.isAbort()) {
+                return;
+            }
             switch (choice) {
                 case 2:
                     runa.upgradeDie(newUI);
                     break;
                 case 1:
                     List<Ability> selectedAbilities = newUI.selectRewardAbilities(numOfRewardCards);
+                    if (game.isAbort()) {
+                        return;
+                    }
                     newUI.stateNewAbilities(selectedAbilities);
                     for (Ability ability : selectedAbilities) {
                         runa.addAbility(ability);
@@ -54,6 +61,9 @@ public class postFight extends State {
         //TODO magic numbers
         if (runa.getHealthPoints() < 50 && runa.getAbilities().size() > 1) {
             List<Ability> discardForHealing = newUI.selectHealingDiscard();
+            if (game.isAbort()) {
+                return;
+            }
             int healAmount = 0;
             for (Ability ability : discardForHealing) {
                 runa.getAbilities().remove(ability);

@@ -15,6 +15,9 @@ public class RunaTurn extends State {
         newUI.printStageFighters(stage);
         game.getRuna().resetResistances();
         Ability nextAbility = newUI.selectAbilityToPlay();
+        if (game.isAbort()) {
+            return;
+        }
         nextAbility.play(game.getRuna(), newUI);
         stage.clearDeadMobs();
 

@@ -16,6 +16,9 @@ public class Shuffle extends State {
     @Override
     public void start() {
         int[] seeds = newUI.getShuffleSeeds();
+        if (game.isAbort()) {
+            return;
+        }
         Collections.shuffle(game.getAbilityList(), new Random(seeds[0]));
         Collections.shuffle(game.getMonsterList(), new Random(seeds[1]));
         game.addMonstersToQueue(game.getMonsterList());

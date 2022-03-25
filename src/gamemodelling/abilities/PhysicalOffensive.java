@@ -27,6 +27,7 @@ public abstract class PhysicalOffensive extends OffensiveAbility {
 
     @Override
     public void play(Entity user, Entity target, newUI newUI) {
+        //todo think about splitting abilities into runa and monster subclasses hen extract quit check ti this class
         newUI.stateAbilityUsage(user, this);
         use(user, target, newUI);
     }

@@ -17,7 +17,9 @@ public class newUI implements UserInterface {
     private static final String MULTIPLE_INPUT_FORMAT = "^(?!0)([0-9]+,)*[0-9]+$";
     private static final String INPUT_FORMAT = "^quit$|^$|" + MULTIPLE_INPUT_FORMAT;
     private static final String NO_ACTION_CODE = "0";
+    private static final String QUIT = "quit";
     private static final int NO_ACTION_INT = 0;
+    private static final int QUIT_INT = -1;
     private static final String SEGMENT_SEPARATOR = "----------------------------------------";
 
     private final Scanner scanner = new Scanner(System.in);
@@ -51,15 +53,15 @@ public class newUI implements UserInterface {
     }
 
 
-    public List<Integer> getMultipleInputs(int amount, String request, boolean allowNoAction) {
+    public List<Integer> getMultipleInputs(int amount, String request, boolean allowNoAction, boolean allowDoubleEntries) {
         List<Integer> inputs;
         do {
-            inputs = getMultipleInputs(request, allowNoAction);
-        } while (inputs.size() != amount);
+            inputs = getMultipleInputs(request, allowNoAction, allowDoubleEntries);
+        } while (inputs.size() != amount && inputs.get(0) != QUIT_INT);
         return inputs;
     }
 
-    private List<Integer> getMultipleInputs(String request, boolean allowNoAction) {
+    private List<Integer> getMultipleInputs(String request, boolean allowNoAction, boolean allowDoubleEntries) {
         //Todo make no input possible
         List<Integer> inputs = new ArrayList<>();
         boolean repeat = true;
@@ -74,8 +76,10 @@ public class newUI implements UserInterface {
                     repeat = true;
                     break;
                 }
+
                 //TODO use isEmpty() here
-                if (partAsInt < NO_ACTION_INT || (partAsInt == NO_ACTION_INT && !allowNoAction)) {
+                if (partAsInt < QUIT_INT || (!allowNoAction && partAsInt == NO_ACTION_INT)
+                        || (!allowDoubleEntries && inputs.contains(partAsInt))) {
                     repeat = true;
                     break;
                 }
@@ -88,7 +92,7 @@ public class newUI implements UserInterface {
     @Override
     public int[] getShuffleSeeds() {
         System.out.println("To shuffle ability cards and monsters, enter two seeds");
-        List<Integer> seedList = getMultipleInputs(2, "Enter seeds [1--2147483647] separated by comma:", false);
+        List<Integer> seedList = getMultipleInputs(2, "Enter seeds [1--2147483647] separated by comma:", false, true);
         return seedList.stream().mapToInt(Integer::intValue).toArray();
     }
 
@@ -103,7 +107,11 @@ public class newUI implements UserInterface {
         Runa runa = game.getRuna();
         List<Ability> abilities = runa.getAbilities();
         printRunaAbilities();
-        int index = getSingleInput(abilities.size(), false) - 1;
+        int input = getSingleInput(abilities.size(), false);
+        if (input == QUIT_INT) {
+            return null;
+        }
+        int index = --input;
         return abilities.get(index);
     }
 
@@ -163,9 +171,12 @@ public class newUI implements UserInterface {
                 choices.add(getSingleInput(amount * 2, false));
             } else {
                 choices = (getMultipleInputs(amount, "Enter numbers [1--" + (amount * 2)
-                        + "] separated by comma:", false));
+                        + "] separated by comma:", false, false));
             }
         } while (choices.get(0) == NO_ACTION_INT);
+        if (choices.get(0) == QUIT_INT) {
+            return null;
+        }
         game.removeAbilitiesFromList(offeredAbilities);
         return getAbilitiesFromIndices(choices, offeredAbilities);
     }
@@ -184,10 +195,10 @@ public class newUI implements UserInterface {
         } else {
             do {
                 choices = getMultipleInputs("Enter numbers [1--" + runaAbilities.size()
-                        + "] separated by comma:", true);
+                        + "] separated by comma:", true, false);
             } while (choices.size() > maxDiscardAmount);
         }
-        if (choices.get(0) == NO_ACTION_INT) {
+        if (choices.get(0) == NO_ACTION_INT || choices.get(0) == QUIT_INT) {
             return new LinkedList<>();
         }
         return getAbilitiesFromIndices(choices, runaAbilities);
@@ -238,7 +249,6 @@ public class newUI implements UserInterface {
     }
 
     private int getSingleInput(int upperBoundary, boolean allowNoAction) {
-
         return getInputNumber(upperBoundary, "Enter number [1--" + upperBoundary + "]:", allowNoAction);
     }
 
@@ -253,7 +263,7 @@ public class newUI implements UserInterface {
                 continue;
             }
 
-            if (input > upperBoundary || input < NO_ACTION_INT || (input == NO_ACTION_INT && !allowNoAction)) {
+            if (input > upperBoundary || input < QUIT_INT || (input == NO_ACTION_INT && !allowNoAction)) {
                 continue;
             }
             running = false;
@@ -273,9 +283,10 @@ public class newUI implements UserInterface {
             }
         } while (repeat);
 
-        if (input.equals("quit")) {
+        if (input.equals(QUIT)) {
             //Todo fertig machen
-            game.setAbort(true);
+            game.abort();
+            return Integer.toString(QUIT_INT);
         }
 
         if (input.isEmpty()) {

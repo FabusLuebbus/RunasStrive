@@ -114,8 +114,9 @@ public class Game {
         return abort;
     }
 
-    public void setAbort(boolean abort) {
-        this.abort = abort;
+    public void abort() {
+        this.abort = true;
+        states.clear();
     }
 
     public int getStageNumber() {

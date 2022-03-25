@@ -16,6 +16,7 @@ import gamemodelling.abilities.runa.Water;
 import gamemodelling.entities.monsters.Monster;
 import gamemodelling.entities.monsters.Monsters;
 import gamemodelling.entities.runa.Runa;
+import gamemodelling.entities.runa.RunaClasses;
 
 import java.util.Collections;
 import java.util.List;
@@ -31,7 +32,11 @@ public class InitializeLevel extends State {
         game.setStageNumber(1);
         switch (game.getLevel()) {
             case 1:
-                game.setRuna(new Runa(newUI.setupAndGetInitialRunaClass()));
+                RunaClasses runaClass = newUI.setupAndGetInitialRunaClass();
+                if (game.isAbort()) {
+                    return;
+                }
+                game.setRuna(new Runa(runaClass));
                 game.setCurrentStageBoss(new Monster(Monsters.SPIDER_KING));
                 game.addAbilities(List.of(new Slash(1), new Swing(1), new Thrust(1), new Pierce(1), new Parry(1),
                         new Focus(1), new Reflect(1), new Water(1), new Ice(1), new Fire(1), new Lightning(1)));
