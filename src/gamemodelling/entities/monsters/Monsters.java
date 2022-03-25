@@ -26,7 +26,7 @@ public enum Monsters {
     //
     SPIDER_KING(1, true, 0, 50, Type.LIGHTNING,
             List.of(new Bite(1), new Block(1), new Focus(1), new MonsterLightning(1))),
-    MEGA_SAURUS(2, true, 100, 0, Type.BASIC,
+    MEGA_SAURUS(2, true, 100, 100, Type.BASIC,
             List.of(new Bite(2), new Block(2), new Focus(2), new MonsterFire(1), new MonsterLightning(1))),
     //
     //Level 1 Monsters

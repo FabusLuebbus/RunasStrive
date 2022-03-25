@@ -2,7 +2,6 @@ package states;
 
 import game.Game;
 import gamemodelling.abilities.Ability;
-import gamemodelling.abilities.NonOffensiveAbility;
 
 public class RunaTurn extends State {
     Stage stage;
@@ -16,10 +15,10 @@ public class RunaTurn extends State {
         newUI.printStageFighters(stage);
         game.getRuna().resetResistances();
         Ability nextAbility = newUI.selectAbilityToPlay();
-        nextAbility.play(stage.fighters.get(0), newUI);
+        nextAbility.play(game.getRuna(), newUI);
         stage.clearDeadMobs();
 
-        if (stage.fighters.size() == 1 && stage.fighters.contains(game.getRuna())) {
+        if (stage.getMonsters().isEmpty()) {
             nextState(new postFight(game, stage.getNumberOfMonsters()));
         } else {
             nextState(new FocusPointsMonsters(game, stage));

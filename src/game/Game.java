@@ -4,7 +4,7 @@ import UI.newUI;
 import gamemodelling.abilities.Ability;
 import gamemodelling.entities.runa.Runa;
 import gamemodelling.entities.monsters.Monster;
-import states.Initialize;
+import states.InitializeLevel;
 import states.Stage;
 import states.State;
 
@@ -29,7 +29,8 @@ public class Game {
     private boolean abort = false;
 
     public Game() {
-        states.add(new Initialize(this));
+        states.add(new InitializeLevel(this));
+        setLevel(1);
         while (!states.isEmpty()) {
             nextAction();
         }
@@ -93,12 +94,20 @@ public class Game {
         return monsterQueue.poll();
     }
 
+    public void clearMonsterQueue() {
+        monsterQueue.clear();
+    }
+
     public void setLevel(int level) {
         this.level = level;
     }
 
     public int getLevel() {
         return level;
+    }
+
+    public void incrLevel() {
+        level++;
     }
 
     public boolean isAbort() {
@@ -115,6 +124,10 @@ public class Game {
 
     public void setStageNumber(int stageNumber) {
         this.stageNumber = stageNumber;
+    }
+
+    public void incrStage() {
+        stageNumber++;
     }
 
     public Monster getCurrentStageBoss() {

@@ -15,8 +15,8 @@ public class Lightning extends MagicalOffensive {
     @Override
     public void use(Entity user, Entity target) {
         Runa runa = (Runa) user;
-        setBaseDamage((2 * getLevel() + 5) * runa.getAvailableFocusPoints() + 2);
-        runa.removeFocus(runa.getAvailableFocusPoints());
+        setBaseDamage((2 * getLevel() + 5) * runa.getFocusPoints() + 2);
+        runa.removeFocus(runa.getFocusPoints());
         dealDamage(runa, target, this);
     }
 }

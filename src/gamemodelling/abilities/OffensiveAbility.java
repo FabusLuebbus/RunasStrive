@@ -32,7 +32,6 @@ public abstract class OffensiveAbility extends Ability {
 
     @Override
     public void play(Entity user, newUI newUI) {
-        newUI.stateAbilityUsage(user, this);
         play(user, newUI.selectTarget(), newUI);
     }
 }

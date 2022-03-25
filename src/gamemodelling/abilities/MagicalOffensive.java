@@ -9,6 +9,7 @@ public abstract class MagicalOffensive extends OffensiveAbility {
 
     public MagicalOffensive(int initLvl, int ip, DamageType dmgType) {
         super(initLvl, ip, dmgType);
+        setNeedsFocus(true);
     }
 
     @Override
@@ -33,7 +34,7 @@ public abstract class MagicalOffensive extends OffensiveAbility {
     public void dealDamage(Entity user, Entity target, OffensiveAbility ability) {
         int actualDamage = getBaseDamage();
         if (ability.getDmgType().getEffective() != null  &&  ability.getDmgType().getEffective() == target.getType()) {
-            //TODO activate bonus
+            actualDamage += 2 * getLevel();
         }
         if (target.getMagicalBlock() > 0) {
             actualDamage -= target.getMagicalBlock();

@@ -6,8 +6,9 @@ import gamemodelling.abilities.Ability;
 import gamemodelling.entities.Entity;
 
 public class Runa extends Entity {
+
+    private RunaClasses runaClass;
     private int maxFocusPoints;
-    RunaClasses runaClass;
 
     public Runa(RunaClasses runaClass) {
         super(50);
@@ -26,9 +27,16 @@ public class Runa extends Entity {
         return maxFocusPoints;
     }
 
-    public int getAvailableFocusPoints() {
-        //returns AVAILABLE points
-        return super.getFocusPoints() - 1;
+    public RunaClasses getRunaClass() {
+        return runaClass;
+    }
+
+    @Override
+    public void removeFocus(int amount) {
+        super.removeFocus(amount);
+        if (getFocusPoints() < 1) {
+            addFocus(1);
+        }
     }
 
     @Override
@@ -47,6 +55,11 @@ public class Runa extends Entity {
     @Override
     public String getName() {
         return "Runa";
+    }
+
+    public void print() {
+        System.out.println(getName() + " (" + getHealthPoints() + '/' + getMaxHealth() + "HP, "
+                + getFocusPoints() + '/' + getMaxFocusPoints() + " FP)" + printAttempts());
     }
 
     @Override

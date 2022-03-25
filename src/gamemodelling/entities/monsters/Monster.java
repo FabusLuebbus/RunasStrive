@@ -51,6 +51,11 @@ public class Monster extends Entity implements Comparable<Monster> {
         return deflectAmount;
     }
 
+    public void print() {
+        System.out.println(getName() + " (" + getHealthPoints() + '/' + getMaxHealth() + "HP, "
+                + getFocusPoints() + "FP)" + printAttempts());
+    }
+
     public Ability getNextAbility() {
         abilityQueue.add(abilityQueue.peek());
         return abilityQueue.poll();

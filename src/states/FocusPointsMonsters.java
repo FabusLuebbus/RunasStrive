@@ -16,8 +16,8 @@ public class FocusPointsMonsters extends State {
     @Override
     public void start() {
         //all monsters
-        for (int i = 1; i < stage.fighters.size(); i++) {
-            Entity entity = stage.fighters.get(i);
+        for (int i = 0; i < stage.getMonsters().size(); i++) {
+            Entity entity = stage.getMonsters().get(i);
             entity.givePotentialFocus(newUI);
         }
         nextState(new MonsterTurn(game, stage));

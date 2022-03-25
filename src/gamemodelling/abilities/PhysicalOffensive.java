@@ -9,6 +9,7 @@ public abstract class PhysicalOffensive extends OffensiveAbility {
 
     public PhysicalOffensive(int initLvl, int ip, DamageType dmgType) {
         super(initLvl, ip, dmgType);
+        setNeedsFocus(false);
     }
 
     public void dealDamage(Entity target, OffensiveAbility ability) {
@@ -26,6 +27,7 @@ public abstract class PhysicalOffensive extends OffensiveAbility {
 
     @Override
     public void play(Entity user, Entity target, newUI newUI) {
+        newUI.stateAbilityUsage(user, this);
         use(user, target, newUI);
     }
 

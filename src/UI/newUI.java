@@ -3,6 +3,7 @@ package UI;
 import game.Game;
 import gamemodelling.abilities.Ability;
 import gamemodelling.entities.Entity;
+import gamemodelling.entities.monsters.Monster;
 import gamemodelling.entities.runa.Runa;
 import gamemodelling.entities.runa.RunaClasses;
 import states.Stage;
@@ -30,7 +31,7 @@ public class newUI implements UserInterface {
     public RunaClasses setupAndGetInitialRunaClass() {
         System.out.println("Welcome to Runa's Strive\nSelect Runa's character class\n1) Warrior\n2) Mage\n3) Paladin");
         RunaClasses runaClass = null;
-        switch (getSingleInput(3)) {
+        switch (getSingleInput(3, false)) {
             case 1:
                 runaClass = RunaClasses.WARRIOR;
                 break;
@@ -49,21 +50,23 @@ public class newUI implements UserInterface {
         return runaClass;
     }
 
-    @Override
-    public List<Integer> getMultipleInputs(int amount, String request) {
-        boolean repeat = true;
+
+    public List<Integer> getMultipleInputs(int amount, String request, boolean allowNoAction) {
+        List<Integer> inputs;
+        do {
+            inputs = getMultipleInputs(request, allowNoAction);
+        } while (inputs.size() != amount);
+        return inputs;
+    }
+
+    private List<Integer> getMultipleInputs(String request, boolean allowNoAction) {
+        //Todo make no input possible
         List<Integer> inputs = new ArrayList<>();
+        boolean repeat = true;
         while (repeat) {
             repeat = false;
             String[] tempInput = getInputString(request).split(",");
-            if (tempInput.length != amount) {
-                if (tempInput[0].equals(NO_ACTION_CODE) ) {
-                    return new ArrayList<>(Integer.parseInt(tempInput[0]));
-                }
-                repeat = true;
-                continue;
-            }
-            for (int i = 0; i < amount; i++) {
+            for (int i = 0; i < tempInput.length; i++) {
                 int partAsInt;
                 try {
                     partAsInt = Integer.parseInt(tempInput[i]);
@@ -72,7 +75,7 @@ public class newUI implements UserInterface {
                     break;
                 }
                 //TODO use isEmpty() here
-                if (partAsInt < NO_ACTION_INT) {
+                if (partAsInt < NO_ACTION_INT || (partAsInt == NO_ACTION_INT && !allowNoAction)) {
                     repeat = true;
                     break;
                 }
@@ -85,7 +88,7 @@ public class newUI implements UserInterface {
     @Override
     public int[] getShuffleSeeds() {
         System.out.println("To shuffle ability cards and monsters, enter two seeds");
-        List<Integer> seedList = getMultipleInputs(2, "Enter seeds [1--2147483647] separated by comma:");
+        List<Integer> seedList = getMultipleInputs(2, "Enter seeds [1--2147483647] separated by comma:", false);
         return seedList.stream().mapToInt(Integer::intValue).toArray();
     }
 
@@ -100,7 +103,7 @@ public class newUI implements UserInterface {
         Runa runa = game.getRuna();
         List<Ability> abilities = runa.getAbilities();
         printRunaAbilities();
-        int index = getSingleInput(abilities.size()) - 1;
+        int index = getSingleInput(abilities.size(), false) - 1;
         return abilities.get(index);
     }
 
@@ -114,12 +117,12 @@ public class newUI implements UserInterface {
     }
 
     public void printStageFighters(Stage stage) {
-        List<Entity> fighters = stage.getFighters();
+        List<Monster> monsters = stage.getMonsters();
         System.out.println(SEGMENT_SEPARATOR);
-        fighters.get(0).print();
+        game.getRuna().print();
         System.out.println("vs.");
-        for (int i = 1; i < fighters.size(); i++) {
-            fighters.get(i).print();
+        for (Monster monster : monsters) {
+            monster.print();
         }
         System.out.println(SEGMENT_SEPARATOR);
     }
@@ -127,7 +130,7 @@ public class newUI implements UserInterface {
     @Override
     public Entity selectTarget() {
         Stage stage = game.getCurrentStage();
-        List<Entity> monsters = stage.getFighters().subList(1, stage.getFighters().size());
+        List<Monster> monsters = stage.getMonsters();
         if (monsters.size() == 1) {
             return monsters.get(0);
         }
@@ -135,13 +138,17 @@ public class newUI implements UserInterface {
         for (int i = 0; i < monsters.size(); i++) {
             System.out.println((i + 1) + ") " + monsters.get(i).getName());
         }
-        return monsters.get(getSingleInput(monsters.size()) - 1);
+        return monsters.get(getSingleInput(monsters.size(), false) - 1);
     }
 
     @Override
     public int selectRewardOption() {
         System.out.println("Choose Runa’s reward\n1) new ability cards\n2) next player dice");
-        return getSingleInput(2);
+        int input;
+        do {
+            input = getSingleInput(2, false);
+        } while (input == NO_ACTION_INT);
+        return input;
     }
 
     @Override
@@ -149,26 +156,58 @@ public class newUI implements UserInterface {
         System.out.println("Pick " + amount + " card(s) as loot");
         List<Ability> abilities = game.getAbilityList();
         List<Ability> offeredAbilities = List.copyOf(abilities.subList(0, Math.min((2 * amount), abilities.size())));
-        List<Ability> chosenAbilities = new LinkedList<>();
-        for (int i = 0; i < offeredAbilities.size(); i++) {
-            System.out.println((i + 1) + ") " + offeredAbilities.get(i).getName());
-        }
-        List<Integer> choices = new LinkedList<Integer>();
-        if (amount == 1) {
-            choices.add(getSingleInput(amount * 2));
-        } else {
-            choices.addAll(getMultipleInputs(amount, "Enter numbers [1--" + (amount * 2) + "] separated by comma:"));
-        }
-        for (int i : choices) {
-            chosenAbilities.add(offeredAbilities.get(i - 1));
-        }
+        printAbilityList(offeredAbilities);
+        List<Integer> choices = new LinkedList<>();
+        do {
+            if (amount == 1) {
+                choices.add(getSingleInput(amount * 2, false));
+            } else {
+                choices = (getMultipleInputs(amount, "Enter numbers [1--" + (amount * 2)
+                        + "] separated by comma:", false));
+            }
+        } while (choices.get(0) == NO_ACTION_INT);
         game.removeAbilitiesFromList(offeredAbilities);
-        return chosenAbilities;
+        return getAbilitiesFromIndices(choices, offeredAbilities);
     }
 
     @Override
     public List<Ability> selectHealingDiscard() {
-        return null;
+        Runa runa = game.getRuna();
+        List<Ability> runaAbilities = game.getRuna().getAbilities();
+        int maxDiscardAmount = runaAbilities.size() - 1;
+        System.out.println("Runa (" + runa.getHealthPoints() + "/" + runa.getMaxHealth()
+                + " HP) can discard ability cards for healing (or none)");
+        printAbilityList(runaAbilities);
+        List<Integer> choices = new LinkedList<>();
+        if (maxDiscardAmount == 1) {
+            choices.add(getSingleInput(runaAbilities.size(), true));
+        } else {
+            do {
+                choices = getMultipleInputs("Enter numbers [1--" + runaAbilities.size()
+                        + "] separated by comma:", true);
+            } while (choices.size() > maxDiscardAmount);
+        }
+        if (choices.get(0) == NO_ACTION_INT) {
+            return new LinkedList<>();
+        }
+        return getAbilitiesFromIndices(choices, runaAbilities);
+    }
+
+    /**
+     * this method returns a selection of abilities based on a list of indices given as parameter.
+     * note that all indices are incremented by one in order to match output format. This means
+     * that in thie method every index has to be decremented before accessing list.
+     *
+     * @param indices list of indices
+     * @param abilities base list of abilities
+     * @return selection of abilities based on index list
+     */
+    private List<Ability> getAbilitiesFromIndices(List<Integer> indices, List<Ability> abilities) {
+        List<Ability> output = new LinkedList<>();
+        for (int i : indices) {
+            output.add(abilities.get(i - 1));
+        }
+        return output;
     }
 
     @Override
@@ -183,19 +222,27 @@ public class newUI implements UserInterface {
     }
 
     @Override
+    public void stateNewAbilities(List<Ability> abilities) {
+        for (Ability ability : abilities) {
+            System.out.println("Runa gets " + ability.getName());
+        }
+    }
+
+    @Override
     public void stateAbilityUsage(Entity user, Ability ability) {
         System.out.println(user.getName() + " uses " + ability.getName());
     }
 
     public int getDiceRoll(int upperBoundary) {
-        return getInputNumber(upperBoundary, "Enter dice roll [1--" + upperBoundary + "]:");
+        return getInputNumber(upperBoundary, "Enter dice roll [1--" + upperBoundary + "]:", false);
     }
 
-    private int getSingleInput(int upperBoundary) {
-        return getInputNumber(upperBoundary, "Enter number [1--" + upperBoundary + "]:");
+    private int getSingleInput(int upperBoundary, boolean allowNoAction) {
+
+        return getInputNumber(upperBoundary, "Enter number [1--" + upperBoundary + "]:", allowNoAction);
     }
 
-    private int getInputNumber(int upperBoundary, String request) {
+    private int getInputNumber(int upperBoundary, String request, boolean allowNoAction) {
         boolean running = true;
         int input = 0;
         while (running) {
@@ -206,7 +253,7 @@ public class newUI implements UserInterface {
                 continue;
             }
 
-            if (input > upperBoundary || input < NO_ACTION_INT) {
+            if (input > upperBoundary || input < NO_ACTION_INT || (input == NO_ACTION_INT && !allowNoAction)) {
                 continue;
             }
             running = false;
@@ -214,28 +261,33 @@ public class newUI implements UserInterface {
         return input;
     }
 
-
-
     private String getInputString(String inputRequest) {
         boolean repeat;
         String input;
         do {
             repeat = false;
             System.out.println(inputRequest);
-            input = scanner.next();
+            input = scanner.nextLine();
             if (!input.matches(INPUT_FORMAT)) {
                 repeat = true;
             }
         } while (repeat);
 
         if (input.equals("quit")) {
+            //Todo fertig machen
             game.setAbort(true);
         }
 
-        if (input.equals("")) {
+        if (input.isEmpty()) {
             input = NO_ACTION_CODE;
         }
         return input;
+    }
+
+    private void printAbilityList(List<Ability> abilities) {
+        for (int i = 0; i < abilities.size(); i++) {
+            System.out.println((i + 1) + ") " + abilities.get(i).getName());
+        }
     }
 
 }

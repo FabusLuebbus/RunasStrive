@@ -15,8 +15,8 @@ public class Water extends MagicalOffensive {
     @Override
     public void use(Entity user, Entity target) {
         Runa runa = (Runa) user;
-        setBaseDamage((2 * getLevel() + 4) * runa.getAvailableFocusPoints());
-        runa.removeFocus(runa.getAvailableFocusPoints());
+        setBaseDamage((2 * getLevel() + 4) * runa.getFocusPoints());
+        runa.removeFocus(runa.getFocusPoints());
         dealDamage(runa, target, this);
     }
 }

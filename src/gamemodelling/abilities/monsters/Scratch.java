@@ -15,11 +15,7 @@ public class Scratch extends PhysicalOffensive {
 
     @Override
     public void use(Entity user, Entity target, newUI newUI) {
-        Monster monster = (Monster) target;
         setBaseDamage(5 * getLevel());
-        if (monster.getType() == getDmgType().getEffective()) {
-
-        }
         dealDamage(target, this);
     }
 }

@@ -8,6 +8,7 @@ public abstract class NonOffensiveAbility extends Ability {
 
     public NonOffensiveAbility(int initLvl, int ip) {
         super(initLvl, ip);
+        setNeedsFocus(false);
     }
 
     public abstract void use(Entity user);

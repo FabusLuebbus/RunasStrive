@@ -1,8 +1,6 @@
 package states;
 
 import game.Game;
-import game.GameUtil;
-import gamemodelling.entities.Entity;
 
 public class FocusPointsRuna extends State {
     Stage stage;

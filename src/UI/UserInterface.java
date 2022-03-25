@@ -11,8 +11,6 @@ public interface UserInterface {
 
     RunaClasses setupAndGetInitialRunaClass();
 
-    List<Integer> getMultipleInputs(int amount, String request);
-
     int[] getShuffleSeeds();
 
     void stateRoomEntering();
@@ -30,6 +28,8 @@ public interface UserInterface {
     void stateFocusGain(Entity entity);
 
     void stateDieUpgrade(Runa runa);
+
+    void stateNewAbilities(List<Ability> abilities);
 
     void stateAbilityUsage(Entity user, Ability ability);
 }

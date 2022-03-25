@@ -7,6 +7,7 @@ import states.Stage;
 public abstract class Ability implements Playable, Comparable<Ability> {
     private int level;
     private int ip;
+    private boolean needsFocus;
 
 
     public Ability(int initLvl, int ip) {
@@ -37,6 +38,14 @@ public abstract class Ability implements Playable, Comparable<Ability> {
 
     public void setIp(int ip) {
         this.ip = ip;
+    }
+
+    public boolean needsFocus() {
+        return needsFocus;
+    }
+
+    public void setNeedsFocus(boolean needsFocus) {
+        this.needsFocus = needsFocus;
     }
 
     @Override

@@ -25,6 +25,7 @@ public abstract class Entity implements Living {
 
     @Override
     public void addHealth(int amount) {
+        System.out.println(getName() + " gains " + amount + " health");
         healthPoints += amount;
     }
 
@@ -119,10 +120,7 @@ public abstract class Entity implements Living {
         }
     }
 
-    public void print() {
-        System.out.println(getName() + " (" + getHealthPoints() + '/' + getMaxHealth() + "HP, "
-                + getFocusPoints() + "FP)" + printAttempts());
-    }
+
 
     protected abstract String printAttempts();
 

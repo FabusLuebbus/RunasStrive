@@ -13,9 +13,4 @@ public class Deflect extends NonOffensiveAbility {
     public void use(Entity user) {
         user.setMagicalBlock(11 * getLevel() + 2);
     }
-
-    @Override
-    public void play(Entity user, Entity target, newUI newUI) {
-
-    }
 }
